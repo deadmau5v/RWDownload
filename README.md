@@ -1,50 +1,59 @@
-# React + TypeScript + Vite
+<div name="readme-top"></div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<!-- Logo -->
+<div align="center">
+<h3><b>铁锈战争下载站</b></h3>
+</div>
 
-Currently, two official plugins are available:
+<!-- 项目描述 -->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> 一个简单的网站，用于下载铁锈战争游戏客户端
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🛠 技术栈 <a name="built-with"></a>
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+> 使用 Vite + React 纯前端
+
+<!-- 特性 -->
+
+<p align="right">(<a href="#readme-top">返回顶部</a>)</p>
+
+<!-- 在线演示 -->
+
+## 🚀 在线演示 <a name="live-demo"></a>
+
+
+- [在线网站](https://pan.d5v.cc)
+
+<p align="right">(<a href="#readme-top">返回顶部</a>)</p>
+
+<!-- 快速开始 -->
+
+## 💻 快速开始 <a name="getting-started"></a>
+
+```shell
+pnpm install
+pnpm dev
+pnpm build
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+<p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+<!-- 贡献 -->
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 🤝 贡献 <a name="contributing"></a>
+
+- issue
+- pr
+
+<p align="right">(<a href="#readme-top">返回顶部</a>)</p>
+
+<!-- 许可证 -->
+
+## 📝 许可证 <a name="license"></a>
+
+本项目基于MIT许可证开源，请遵守MIT许可证协议
+
+<p align="right">(<a href="#readme-top">返回顶部</a>)</p>
+
