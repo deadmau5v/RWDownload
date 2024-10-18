@@ -2,12 +2,15 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AiFillWindows, AiOutlineLinux, AiFillAndroid, AiFillApple, AiOutlineCloudDownload, AiFillBug, AiFillStar } from "react-icons/ai";
 import { FaBox } from "react-icons/fa";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer"
-
+import { Alert, AlertTitle } from "@/components/ui/alert"
+import { Search } from "lucide-react"
 
 interface GameVersion {
   version: string // 版本号
@@ -19,6 +22,7 @@ interface GameVersion {
   downloads: { [key: string]: string } // 下载链接
 }
 
+// 所有数据
 const gameVersions: GameVersion[] = [
   {
     "version": "铁锈战争 1.15",
@@ -195,6 +199,7 @@ const gameVersions: GameVersion[] = [
   },
 ]
 
+// 系统选择器
 const SystemSelector = ({ systems, onSelect, selectedSystem }:
   { systems: string[], onSelect: Dispatch<SetStateAction<string | undefined>>, selectedSystem: string | undefined }) => {
   return (
@@ -240,6 +245,7 @@ const SystemSelector = ({ systems, onSelect, selectedSystem }:
   )
 }
 
+// Steam游戏分享嵌入块
 function GameSteamShare() {
   return <div className="m-5 mx-auto max-w-lg" style={{
     width: "100%",
@@ -250,9 +256,17 @@ function GameSteamShare() {
 }
 
 
+function GameVersionCounter({ games }: { games: GameVersion[] }) {
+  return (
+    <Alert className="mb-2">
+      <Search className="h-4 w-4" />
+      <AlertTitle>总共有 <span className="text-blue-500 text-lg">{games.length}</span> 个版本</AlertTitle>
+    </Alert>
+  );
+}
 
+// 主容器
 export function GameMuseumComponent() {
-
   const [showSteamWindow, setShowSteamWindow] = useState(false)
 
   useEffect(() => {
@@ -260,22 +274,60 @@ export function GameMuseumComponent() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-
-      <h1 className="text-4xl font-bold text-center mb-4">铁锈战争下载站</h1>
-      <p className="text-center text-gray-600 mb-2">
-        欢迎来到铁锈战争下载站，本站提供无广告，免登录的直连下载服务。
-      </p>
-      <p className="text-center text-gray-600 mb-8">
-
-      </p>
-      <div>
-        {gameVersions.map((game) => (
-          <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
-        ))}
-      </div>
+    <div className="container">
+      <img src="https://cdn1.d5v.cc/pan.d5v.cc/logo.png" style={{
+        height: "10rem",
+        display: "block",
+        margin: "0 auto"
+      }} />
+      <h1 className="text-4xl font-bold text-center mb-4 mt-4">铁锈战争下载站</h1>
+      <Badge variant="outline" className="bg-blue-500 text-blue-50 border-blue-600 border mr-2">免登录</Badge>
+      <Badge variant="outline" className="bg-green-500 text-green-50 border-green-600 border mr-2">不限速</Badge>
+      <Badge variant="outline" className="bg-lime-500 text-lime-50 border-lime-600 border">无广告</Badge>
 
 
+      <Tabs defaultValue="all" style={{
+        width: "80vw",
+        maxWidth: "800px"
+      }}>
+        <TabsList className="w-full bg-black rounded-md mt-5 h-[50px] pl-2 pr-2 bg-gray-200">
+          <TabsTrigger className="w-full pb-2 bg-gray-200 " value="all">全部版本</TabsTrigger>
+          <TabsTrigger className="w-full pb-2 bg-gray-200 ml-2 mr-2" value="vanilla">原版</TabsTrigger>
+          <TabsTrigger className="w-full pb-2 bg-gray-200 " value="thirdParty">第三方版本</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all">
+          {/* 全部数据 */}
+          <GameVersionCounter games={gameVersions} />
+          <div>
+            {gameVersions.map((game) => (
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent value="vanilla">
+          {/* 原版 */}
+          <GameVersionCounter games={gameVersions.filter((game) => !game.thirdParty)} />
+          <div>
+            {gameVersions.filter((game) => !game.thirdParty).map((game) => (
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent value="thirdParty">
+          {/* 第三方 */}
+          <GameVersionCounter games={gameVersions.filter((game) => game.thirdParty)} />
+          <div>
+            {gameVersions.filter((game) => game.thirdParty).map((game) => (
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
+
+
+
+
+      {/* 正在下载弹出 */}
       <Drawer open={showSteamWindow} onClose={() => setShowSteamWindow(false)}>
         <DrawerContent>
           <DrawerHeader>

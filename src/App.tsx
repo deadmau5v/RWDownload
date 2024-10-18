@@ -2,13 +2,7 @@ import './App.css'
 import { GameMuseumComponent } from './components/game-museum';
 
 function App() {
-
-
-  return (
-    <>
-      <GameMuseumComponent />
-    </>
-  )
+  return <GameMuseumComponent />
 }
 
 export default App
