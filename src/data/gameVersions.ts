@@ -75,7 +75,7 @@ export const gameVersions: GameVersion[] = [
         "version": "RWPP 1.3.0",
         "beta": false,
         "thirdParty": true,
-        "releaseDate": "很久很久以前",
+        "releaseDate": "2024-10-4",
         "description": "现代化的第三方版本，拥有更现代化的UI，更多开房选项，以及更稳定的游戏体验。",
         "downloads": {
             "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/%F0%9F%8E%AE%20%E9%93%81%E9%94%88%E6%88%98%E4%BA%89%20%5B%E7%94%B5%E8%84%91%E7%89%88%F0%9F%92%BB%5D/RWPP-1.3.0.zip",
@@ -221,7 +221,7 @@ export const gameVersions: GameVersion[] = [
     {
         "version": "铁锈战争 1.09",
         "beta": false,
-        "releaseDate": "2024-10-4",
+        "releaseDate": "很久很久以前",
         "description": "",
         "downloads": {
             "Linux": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [Linux版🐧]/RustedWarfare1.09.tar",
