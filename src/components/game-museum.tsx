@@ -1,5 +1,3 @@
-'use client'
-
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -11,235 +9,43 @@ import { FaBox } from "react-icons/fa";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer"
 import { Alert, AlertTitle } from "@/components/ui/alert"
 import { Search } from "lucide-react"
+import { GameVersion, gameVersions } from "@/data/gameVersions"
+import { GrGithub } from "react-icons/gr"
+import { FaShare } from "react-icons/fa6"
 
-interface GameVersion {
-  version: string // 版本号
-  releaseDate: string  // 发布日期
-  description: string  // 版本描述
-  thirdParty?: boolean // 第三方版本
-  beta?: boolean  // 是否为测试版
-  recommended?: boolean  // 是否为推荐版本
-  downloads: { [key: string]: string } // 下载链接
+
+const SystemSelectItem = ({ value, icon }: { value: string, icon: React.ReactNode }) => {
+  return <SelectItem value={value}>
+    <div className="flex items-center">
+      {icon}
+      {value}
+    </div>
+  </SelectItem>
 }
-
-// 所有数据
-const gameVersions: GameVersion[] = [
-  {
-    "version": "铁锈战争 1.15",
-    "beta": false,
-    "recommended": true,
-    "releaseDate": "2022-11-10",
-    "description": "1.15版本更新了少量单位与游戏内容，以及大量Mod特性。",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.15.exe",
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.14",
-    "beta": false,
-    "releaseDate": "2020-8-29",
-    "description": "1.14版本是自1.13.3b以来的一次重大更新，其更新包含大量Mod特性，界面更新以及新单位。",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.14.exe",
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.14.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.14 [30人版]",
-    "beta": false,
-    "releaseDate": "2020-8-29",
-    "description": "1.14版本是自1.13.3b以来的一次重大更新，其更新包含大量Mod特性，界面更新以及新单位。",
-    "thirdParty": true,
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.14 [30人版].apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.14 [20人版]",
-    "beta": false,
-    "releaseDate": "2020-8-29",
-    "description": "1.14版本是自1.13.3b以来的一次重大更新，其更新包含大量Mod特性，界面更新以及新单位。",
-    "thirdParty": true,
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.14 [20人版].apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p11",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.15 p11+ beta.exe",
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p11.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p10",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.15p10.exe",
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p10.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p9",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.15p9.exe",
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p9.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p8",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.15p8.exe",
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p8.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p7",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p7.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p6",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p6.apk"
-    }
-  },
-
-  {
-    "version": "铁锈战争 1.15p5",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p5.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p4",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p4.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.15p3",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.15 p3.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.14p9",
-    "beta": true,
-    "releaseDate": "",
-    "description": "",
-    "downloads": {
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.14 p9.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.13",
-    "beta": false,
-    "releaseDate": "2018-10-28",
-    "description": "1.13版本是一次有较大改动的更新，主要更新MOD相关以及优化，与其它更新相同，此次也有单位更新。",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.13.exe",
-      "Android": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [手机版📱]/铁锈战争全汉化版 1.13.4.apk"
-    }
-  },
-  {
-    "version": "铁锈战争 1.12",
-    "beta": false,
-    "releaseDate": "2018-1-26",
-    "description": "",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.12.exe"
-    }
-  },
-  {
-    "version": "铁锈战争 1.11",
-    "beta": false,
-    "releaseDate": "很久很久以前",
-    "description": "",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.11.exe"
-    }
-  },
-  {
-    "version": "铁锈战争 1.10",
-    "beta": false,
-    "releaseDate": "很久很久以前",
-    "description": "",
-    "downloads": {
-      "Windows": "https://cdn1.d5v.cc/pan.d5v.cc/🎮 铁锈战争 [电脑版💻]/Rusted Warfare 1.10.exe"
-    }
-  },
-]
 
 // 系统选择器
 const SystemSelector = ({ systems, onSelect, selectedSystem }:
   { systems: string[], onSelect: Dispatch<SetStateAction<string | undefined>>, selectedSystem: string | undefined }) => {
+
+  const icons: { [key: string]: React.ReactNode } = {
+    "Windows": <AiFillWindows className="mr-2 h-4 w-4" />,
+    "Linux": <AiOutlineLinux className="mr-2 h-4 w-4" />,
+    "IOS": <AiFillApple className="mr-2 h-4 w-4" />,
+    "Android": <AiFillAndroid className="mr-2 h-4 w-4" />,
+    "Github": <GrGithub className="mr-2 h-4 w-4" />,
+  }
+
+  const items = systems.map((system) => (
+    <SystemSelectItem key={system} value={system} icon={icons[system]} />
+  ))
+
   return (
     <Select onValueChange={onSelect} value={selectedSystem}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select System" />
+        <SelectValue placeholder="选择版本" />
       </SelectTrigger>
       <SelectContent>
-        {systems.includes('Windows') && (
-          <SelectItem value="Windows">
-            <div className="flex items-center">
-              <AiFillWindows className="mr-2 h-4 w-4" />
-              Windows
-            </div>
-          </SelectItem>
-        )}
-        {systems.includes('Linux') && (
-          <SelectItem value="Linux">
-            <div className="flex items-center">
-              <AiOutlineLinux className="mr-2 h-4 w-4" />
-              Linux
-            </div>
-          </SelectItem>
-        )}
-        {systems.includes('IOS') && (
-          <SelectItem value="IOS">
-            <div className="flex items-center">
-              <AiFillApple className="mr-2 h-4 w-4" />
-              IOS
-            </div>
-          </SelectItem>
-        )}
-        {systems.includes('Android') && (
-          <SelectItem value="Android">
-            <div className="flex items-center">
-              <AiFillAndroid className="mr-2 h-4 w-4" />
-              Android
-            </div>
-          </SelectItem>
-        )}
+        {items}
       </SelectContent>
     </Select>
   )
@@ -354,9 +160,25 @@ function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setS
     if (selectedSystem) {
       setShowSteamWindow(true)
       // console.log(game.downloads[selectedSystem])
-      window.open(game.downloads[selectedSystem], '_blank')
+      const url = game.downloads[selectedSystem]
+      if (url.startsWith("*")) {
+        window.open(url.slice(1), '_blank')
+      } else {
+        window.open(url, '_blank')
+      }
     }
   }
+
+  const [downloadButtonMessage, setDownloadButtonMessage] = useState<React.ReactNode>(<></>)
+
+  useEffect(() => {
+    // 如果是 Github 则前往 Github 页面
+    if (selectedSystem && game.downloads[selectedSystem].startsWith("*")) {
+      setDownloadButtonMessage(<><FaShare className="mr-2 h-4 w-4" />前往 {selectedSystem}</>)
+    } else {
+      setDownloadButtonMessage(<><AiOutlineCloudDownload className="mr-2 h-4 w-4" />下载 {selectedSystem} 版</>)
+    }
+  }, [game.downloads, selectedSystem])
 
   return (
     <Card className="flex flex-col mb-5">
@@ -392,8 +214,7 @@ function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setS
       </CardContent>
       <CardFooter className="mt-auto">
         <Button className="w-full" disabled={!selectedSystem} onClick={handleDownload}>
-          <AiOutlineCloudDownload className="mr-2 h-4 w-4" />
-          下载 {selectedSystem} 版
+          {downloadButtonMessage}
         </Button>
       </CardFooter>
     </Card>
