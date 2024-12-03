@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -12,7 +11,7 @@ import { Search } from "lucide-react"
 import { GameVersion, gameVersions } from "@/data/gameVersions"
 import { GrGithub } from "react-icons/gr"
 import { FaShare } from "react-icons/fa6"
-
+import { Link } from 'react-router-dom';
 
 const SystemSelectItem = ({ value, icon }: { value: string, icon: React.ReactNode }) => {
   return <SelectItem value={value}>
@@ -52,7 +51,7 @@ const SystemSelector = ({ systems, onSelect, selectedSystem }:
 }
 
 // Steam游戏分享嵌入块
-function GameSteamShare() {
+export function GameSteamShare() {
   return <div className="m-5 mx-auto max-w-lg" style={{
     width: "100%",
     maxWidth: "800px"
@@ -87,9 +86,18 @@ export function GameMuseumComponent() {
         margin: "0 auto"
       }} />
       <h1 className="text-4xl font-bold text-center mb-4 mt-4">铁锈战争下载站</h1>
-      <Badge variant="outline" className="bg-blue-500 text-blue-50 border-blue-600 border mr-2">免登录</Badge>
-      <Badge variant="outline" className="bg-green-500 text-green-50 border-green-600 border mr-2">不限速</Badge>
-      <Badge variant="outline" className="bg-lime-500 text-lime-50 border-lime-600 border">无广告</Badge>
+
+      <div className="flex justify-center mt-2 mb-4">
+        <div className="bg-blue-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-blue-600 border-blue-600 border mr-2">
+          <FaBox className="mr-1" /><span>免登录</span>
+        </div>
+        <div className="bg-green-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-green-600 border-green-600 border mr-2">
+          <FaBox className="mr-1" /><span>不限速</span>
+        </div>
+        <div className="bg-lime-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-lime-600 border-lime-600 border">
+          <FaBox className="mr-1" /><span>无广告</span>
+        </div>
+      </div>
 
 
       <Tabs defaultValue="all" style={{
@@ -148,7 +156,7 @@ export function GameMuseumComponent() {
   )
 }
 
-function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setShowSteamWindow: Dispatch<SetStateAction<boolean>> }) {
+export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setShowSteamWindow: Dispatch<SetStateAction<boolean>> }) {
 
   const [selectedSystem, setSelectedSystem] = useState<string | undefined>(
     Object.keys(game.downloads)[0]
@@ -159,7 +167,6 @@ function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setS
   const handleDownload = () => {
     if (selectedSystem) {
       setShowSteamWindow(true)
-      // console.log(game.downloads[selectedSystem])
       const url = game.downloads[selectedSystem]
       if (url.startsWith("*")) {
         window.open(url.slice(1), '_blank')
@@ -172,7 +179,6 @@ function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setS
   const [downloadButtonMessage, setDownloadButtonMessage] = useState<React.ReactNode>(<></>)
 
   useEffect(() => {
-    // 如果是 Github 则前往 Github 页面
     if (selectedSystem && game.downloads[selectedSystem].startsWith("*")) {
       setDownloadButtonMessage(<><FaShare className="mr-2 h-4 w-4" />前往 {selectedSystem}</>)
     } else {
@@ -181,12 +187,12 @@ function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setS
   }, [game.downloads, selectedSystem])
 
   return (
-    <Card className="flex flex-col mb-5">
+    <Card className="flex flex-col mb-8">
       <CardHeader>
         <CardTitle className="flex justify-center flex-col">
-          <div>
+          <Link to={`/v/${encodeURIComponent(game.version)}`} className="hover:text-blue-500 text-[inherit] transition-colors duration-300">
             {game.version}
-          </div>
+          </Link>
           <div className="flex items-center justify-center pt-2">
             {game.beta ?
               <div className="ml-2 bg-red-100 rounded pl-1 pr-2 text-sm flex justify-center items-center text-red-600 border-red-600 border"><AiFillBug className="mr-1" /><span>测试版</span></div> :
@@ -212,9 +218,21 @@ function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setS
           selectedSystem={selectedSystem}
         />
       </CardContent>
-      <CardFooter className="mt-auto">
+      <CardFooter className="mt-auto flex flex-col">
+        {/* 下载 */}
         <Button className="w-full" disabled={!selectedSystem} onClick={handleDownload}>
           {downloadButtonMessage}
+        </Button>
+        {/* 分享 */}
+        <Button className="w-full mt-2" disabled={!selectedSystem} variant={"outline"} onClick={() => {
+          const url = `${window.location.origin}/v/${encodeURIComponent(game.version)}`
+          navigator.clipboard.writeText(url).then(() => {
+            alert("复制成功")
+          }).catch(() => {
+            alert("复制失败")
+          })
+        }}>
+          <FaShare className="mr-2 h-4 w-4" /> 复制分享链接
         </Button>
       </CardFooter>
     </Card>
