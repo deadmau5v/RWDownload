@@ -80,7 +80,7 @@ export function GameMuseumComponent() {
 
   return (
     <div className="container">
-      <img src="https://cdn1.d5v.cc/pan.d5v.cc/logo.png" style={{
+      <img src="https://cdn1.d5v.cc/yk6baz03t0m000d5qauzx7785smauwhcDIYPAwFxDwe1DcxxDO==.webp" alt="logo" style={{
         height: "10rem",
         display: "block",
         margin: "0 auto"
@@ -220,7 +220,7 @@ export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersio
       </CardContent>
       <CardFooter className="mt-auto flex flex-col">
         {/* 下载 */}
-        <Button className="w-full" disabled={!selectedSystem} onClick={handleDownload}>
+        <Button title="下载" className="w-full" disabled={!selectedSystem} onClick={handleDownload}>
           {downloadButtonMessage}
         </Button>
         {/* 分享 */}
