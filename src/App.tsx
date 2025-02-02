@@ -2,7 +2,6 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { GameMuseumComponent } from './components/game-museum';
-import { VersionPage } from './components/version-page';
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
           </Helmet>
           <Routes>
             <Route path="/" element={<GameMuseumComponent />} />
-            <Route path="/v/:version" element={<VersionPage />} />
           </Routes>
         </div>
       </BrowserRouter>

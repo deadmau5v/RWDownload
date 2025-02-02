@@ -7,8 +7,8 @@ import { AiFillWindows, AiOutlineLinux, AiFillAndroid, AiFillApple, AiOutlineClo
 import { FaBox } from "react-icons/fa";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer"
 import { Alert, AlertTitle } from "@/components/ui/alert"
-import { Search } from "lucide-react"
-import { GameVersion, gameVersions } from "@/data/gameVersions"
+import { Circle, Search } from "lucide-react"
+import { GameVersion, gameVersions, downloadNodes } from "@/data/gameVersions"
 import { GrGithub } from "react-icons/gr"
 import { FaShare } from "react-icons/fa6"
 import { Link } from 'react-router-dom';
@@ -70,13 +70,51 @@ function GameVersionCounter({ games }: { games: GameVersion[] }) {
   );
 }
 
+
+const testNode = (setNode1Status: Dispatch<SetStateAction<boolean>>, nodeName: string) => {
+  const node = downloadNodes[nodeName]
+  fetch(node + "/ping").then((res) => {
+    if (res.ok) {
+      setNode1Status(true)
+    } else {
+      setNode1Status(false)
+    }
+  })
+}
+
 // 主容器
 export function GameMuseumComponent() {
   const [showSteamWindow, setShowSteamWindow] = useState(false)
+  const [downloadNode, setDownloadNode] = useState("node1")
+
+  const [node1status, setNode1Status] = useState(false)
+  const [node2status, setNode2Status] = useState(false)
+  const [node3status, setNode3Status] = useState(false)
 
   useEffect(() => {
     document.title = "铁锈战争下载站";
   }, []);
+
+  const DownloadNodeSwitch = () => {
+    testNode(setNode1Status, "node1")
+    testNode(setNode2Status, "node2")
+    testNode(setNode3Status, "node3")
+    return (
+      <Tabs defaultValue={downloadNode} className="mb-4" onValueChange={(value) => setDownloadNode(value)}>
+        <TabsList className="w-full rounded-md h-[50px] pl-2 pr-2">
+          <TabsTrigger className="w-full pb-2" value="node1">
+            <Circle className="h-2 w-2 mr-2" fill={node1status ? "green" : "red"} />
+            下载节点 1</TabsTrigger>
+          <TabsTrigger className="w-full pb-2" value="node2">
+          <Circle className="h-2 w-2 mr-2" fill={node2status ? "green" : "red"} />
+          下载节点 2</TabsTrigger>
+          <TabsTrigger className="w-full pb-2"  value="node3">
+          <Circle className="h-2 w-2 mr-2" fill={node3status ? "green" : "red"} />
+          下载节点 3</TabsTrigger>
+        </TabsList>
+      </Tabs>
+    )
+  }
 
   return (
     <div className="container">
@@ -85,7 +123,7 @@ export function GameMuseumComponent() {
         display: "block",
         margin: "0 auto"
       }} />
-      <h1 className="text-4xl font-bold text-center mb-4 mt-4">铁锈战争下载站</h1>
+      <h1 className="text-4xl font-bold text-center mb-4 mt-4 text-green-50">铁锈战争下载站</h1>
 
       <div className="flex justify-center mt-2 mb-4">
         <div className="bg-blue-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-blue-600 border-blue-600 border mr-2">
@@ -102,43 +140,45 @@ export function GameMuseumComponent() {
 
       <Tabs defaultValue="all" style={{
         width: "80vw",
-        maxWidth: "800px"
+        maxWidth: "800px",
+        margin: "0 auto"
       }}>
-        <TabsList className="w-full bg-black rounded-md mt-5 h-[50px] pl-2 pr-2 bg-gray-200">
-          <TabsTrigger className="w-full pb-2 bg-gray-200 " value="all">全部版本</TabsTrigger>
-          <TabsTrigger className="w-full pb-2 bg-gray-200 ml-2 mr-2" value="vanilla">原版</TabsTrigger>
-          <TabsTrigger className="w-full pb-2 bg-gray-200 " value="thirdParty">第三方版本</TabsTrigger>
+        <TabsList className="w-full rounded-md mt-5 h-[50px] pl-2 pr-2">
+          <TabsTrigger className="w-full pb-2" value="all">全部版本</TabsTrigger>
+          <TabsTrigger className="w-full pb-2 ml-2 mr-2" value="vanilla">原版</TabsTrigger>
+          <TabsTrigger className="w-full pb-2 " value="thirdParty">第三方版本</TabsTrigger>
         </TabsList>
         <TabsContent value="all">
+          <DownloadNodeSwitch  />
           {/* 全部数据 */}
           <GameVersionCounter games={gameVersions} />
           <div>
             {gameVersions.map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} downloadNode={downloadNode} />
             ))}
           </div>
         </TabsContent>
         <TabsContent value="vanilla">
+          <DownloadNodeSwitch  />
           {/* 原版 */}
           <GameVersionCounter games={gameVersions.filter((game) => !game.thirdParty)} />
           <div>
             {gameVersions.filter((game) => !game.thirdParty).map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} downloadNode={downloadNode}/>
             ))}
           </div>
         </TabsContent>
         <TabsContent value="thirdParty">
+          <DownloadNodeSwitch  />
           {/* 第三方 */}
           <GameVersionCounter games={gameVersions.filter((game) => game.thirdParty)} />
           <div>
             {gameVersions.filter((game) => game.thirdParty).map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} downloadNode={downloadNode}/>
             ))}
           </div>
         </TabsContent>
       </Tabs>
-
-
 
 
       {/* 正在下载弹出 */}
@@ -156,7 +196,7 @@ export function GameMuseumComponent() {
   )
 }
 
-export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setShowSteamWindow: Dispatch<SetStateAction<boolean>> }) {
+export function GameVersionCard({ game, setShowSteamWindow, downloadNode }: { game: GameVersion, setShowSteamWindow: Dispatch<SetStateAction<boolean>>, downloadNode: string }) {
 
   const [selectedSystem, setSelectedSystem] = useState<string | undefined>(
     Object.keys(game.downloads)[0]
@@ -167,7 +207,9 @@ export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersio
   const handleDownload = () => {
     if (selectedSystem) {
       setShowSteamWindow(true)
-      const url = game.downloads[selectedSystem]
+      let url = game.downloads[selectedSystem]
+      url = url.replace("%HOST%", downloadNodes[downloadNode])
+
       if (url.startsWith("*")) {
         window.open(url.slice(1), '_blank')
       } else {
@@ -224,7 +266,7 @@ export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersio
           {downloadButtonMessage}
         </Button>
         {/* 分享 */}
-        <Button className="w-full mt-2" disabled={!selectedSystem} variant={"outline"} onClick={() => {
+        {/* <Button className="w-full mt-2" disabled={!selectedSystem} variant={"outline"} onClick={() => {
           const url = `${window.location.origin}/v/${encodeURIComponent(game.version)}`
           navigator.clipboard.writeText(url).then(() => {
             alert("复制成功")
@@ -233,7 +275,7 @@ export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersio
           })
         }}>
           <FaShare className="mr-2 h-4 w-4" /> 复制分享链接
-        </Button>
+        </Button> */}
       </CardFooter>
     </Card>
   )
