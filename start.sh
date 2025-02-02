@@ -12,7 +12,7 @@ while true; do
     bun run build
 
     echo "$(date '+%Y-%m-%d %H:%M:%S') - 启动项目..."
-    bun run start --port 5009
+    bun run preview --port 5009
 
     # 等待一段时间后检查是否需要重启
     sleep 5
