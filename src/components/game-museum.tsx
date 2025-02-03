@@ -7,7 +7,7 @@ import { AiFillWindows, AiOutlineLinux, AiFillAndroid, AiFillApple, AiOutlineClo
 import { FaBox } from "react-icons/fa";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from "./ui/drawer"
 import { Alert, AlertTitle } from "@/components/ui/alert"
-import { Circle, Search } from "lucide-react"
+import { Search } from "lucide-react"
 import { GameVersion, gameVersions } from "@/data/gameVersions"
 import { GrGithub } from "react-icons/gr"
 import { FaShare } from "react-icons/fa6"
@@ -86,7 +86,7 @@ function GameVersionCounter({ games }: { games: GameVersion[] }) {
 // 主容器
 export function GameMuseumComponent() {
   const [showSteamWindow, setShowSteamWindow] = useState(false)
-  const [downloadNode, setDownloadNode] = useState("node2")
+  // const [downloadNode, setDownloadNode] = useState("node2")
 
   // const [node1status, setNode1Status] = useState(false)
   // const [node2status, setNode2Status] = useState(false)
@@ -155,7 +155,7 @@ export function GameMuseumComponent() {
           <GameVersionCounter games={gameVersions} />
           <div>
             {gameVersions.map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} downloadNode={downloadNode} />
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow}/>
             ))}
           </div>
         </TabsContent>
@@ -165,7 +165,7 @@ export function GameMuseumComponent() {
           <GameVersionCounter games={gameVersions.filter((game) => !game.thirdParty)} />
           <div>
             {gameVersions.filter((game) => !game.thirdParty).map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} downloadNode={downloadNode}/>
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow}/>
             ))}
           </div>
         </TabsContent>
@@ -175,7 +175,7 @@ export function GameMuseumComponent() {
           <GameVersionCounter games={gameVersions.filter((game) => game.thirdParty)} />
           <div>
             {gameVersions.filter((game) => game.thirdParty).map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} downloadNode={downloadNode}/>
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow}/>
             ))}
           </div>
         </TabsContent>
@@ -197,8 +197,7 @@ export function GameMuseumComponent() {
   )
 }
 
-export function GameVersionCard({ game, setShowSteamWindow, downloadNode }: { game: GameVersion, setShowSteamWindow: Dispatch<SetStateAction<boolean>>, downloadNode: string }) {
-
+export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersion, setShowSteamWindow: Dispatch<SetStateAction<boolean>> }) {
   const [selectedSystem, setSelectedSystem] = useState<string | undefined>(
     Object.keys(game.downloads)[0]
   )
