@@ -24,9 +24,9 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "2022-11-10",
         "description": "1.15版本更新了少量单位与游戏内容，以及大量Mod特性。",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.15.exe",
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15.apk",
-            "Linux": "https://pan.seeoss.com/f/QRGxUe/RustedWarfare1.15.tar"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.15.exe",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15.apk",
+            "Linux": "%HOST%/d/local/pe/RustedWarfare1.15.tar"
         }
     },
     {
@@ -35,9 +35,9 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "2020-8-29",
         "description": "1.14版本是自1.13.3b以来的一次重大更新，其更新包含大量Mod特性，界面更新以及新单位。",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.14.exe",
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.14.apk",
-            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.14.tar"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.14.exe",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.14.apk",
+            "Linux": "%HOST%/d/local/linux/RustedWarfare1.14.tar"
         }
     },
     {
@@ -47,7 +47,7 @@ export const gameVersions: GameVersion[] = [
         "description": "1.14版本是自1.13.3b以来的一次重大更新，其更新包含大量Mod特性，界面更新以及新单位。",
         "thirdParty": true,
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.14-30players.apk",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.14-30players.apk",
         }
     },
     {
@@ -57,7 +57,7 @@ export const gameVersions: GameVersion[] = [
         "description": "1.14版本是自1.13.3b以来的一次重大更新，其更新包含大量Mod特性，界面更新以及新单位。",
         "thirdParty": true,
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.14-20players.apk",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.14-20players.apk",
         }
     },
     {
@@ -67,7 +67,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "2024-10-4",
         "description": "现代化的第三方版本，拥有更现代化的UI，更多开房选项，以及更稳定的游戏体验。",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/RWPP-1.3.0.zip",
+            "Windows": "%HOST%/d/local/pc/RWPP-1.3.0.zip",
             "Github": "*https://github.com/Minxyzgo/RWPP",
         }
     },
@@ -77,8 +77,8 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.15%20p11%2B%20beta.exe",
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p11.apk"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.15%20p11%2B%20beta.exe",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p11.apk"
         }
     },
     {
@@ -87,8 +87,8 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.15p10.exe",
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p10.apk"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.15p10.exe",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p10.apk"
         }
     },
     {
@@ -97,8 +97,8 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.15p9.exe",
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p9.apk"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.15p9.exe",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p9.apk"
         }
     },
     {
@@ -107,8 +107,8 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.15p8.exe",
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p8.apk"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.15p8.exe",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p8.apk"
         }
     },
     {
@@ -117,7 +117,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p7.apk"
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p7.apk"
         }
     },
     {
@@ -126,7 +126,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p6.apk"
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p6.apk"
         }
     },
     {
@@ -135,7 +135,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p5.apk"
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p5.apk"
         }
     },
     {
@@ -144,7 +144,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p4.apk"
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p4.apk"
         }
     },
     {
@@ -153,7 +153,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.15%20p3.apk"
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.15%20p3.apk"
         }
     },
     {
@@ -162,7 +162,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "",
         "description": "",
         "downloads": {
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.14%20p9.apk"
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.14%20p9.apk"
         }
     },
     {
@@ -171,9 +171,9 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "2018-10-28",
         "description": "1.13版本是一次有较大改动的更新，主要更新MOD相关以及优化，与其它更新相同，此次也有单位更新。",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.13.exe",
-            "Android": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare-1.13.4.apk",
-            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.13.tar"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.13.exe",
+            "Android": "%HOST%/d/local/pe/RustedWarfare-1.13.4.apk",
+            "Linux": "%HOST%/d/local/linux/RustedWarfare1.13.tar"
         }
     },
     {
@@ -182,8 +182,8 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "2018-1-26",
         "description": "",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.12.exe",
-            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.12.tar"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.12.exe",
+            "Linux": "%HOST%/d/local/linux/RustedWarfare1.12.tar"
         }
     },
     {
@@ -192,8 +192,8 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "很久很久以前",
         "description": "",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.11.exe",
-            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.11.tar"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.11.exe",
+            "Linux": "%HOST%/d/local/linux/RustedWarfare1.11.tar"
         }
     },
     {
@@ -202,8 +202,8 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "很久很久以前",
         "description": "",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/Rusted%20Warfare%201.10.exe",
-            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.10.tar"
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.10.exe",
+            "Linux": "%HOST%/d/local/linux/RustedWarfare1.10.tar"
         }
     },
     {
@@ -212,7 +212,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "很久很久以前",
         "description": "",
         "downloads": {
-            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.09.tar",
+            "Linux": "%HOST%/d/local/linux/RustedWarfare1.09.tar",
         }
     },
 ]
