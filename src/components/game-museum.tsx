@@ -12,6 +12,8 @@ import { GameVersion, gameVersions } from "@/data/gameVersions"
 import { GrGithub } from "react-icons/gr"
 import { FaShare } from "react-icons/fa6"
 import { Link } from 'react-router-dom';
+import { FaBox as FaBoxIcon } from "react-icons/fa"
+import { AiOutlineArrowRight } from "react-icons/ai"
 
 const SystemSelectItem = ({ value, icon }: { value: string, icon: React.ReactNode }) => {
   return <SelectItem value={value}>
@@ -72,15 +74,15 @@ function GameVersionCounter({ games }: { games: GameVersion[] }) {
 
 
 // const testNode = (setNode1Status: Dispatch<SetStateAction<boolean>>, nodeName: string) => {
-  // const node = downloadNodes[nodeName]
+// const node = downloadNodes[nodeName]
 
-  // fetch(node + "/ping").then((res) => {
-  //   if (res.ok) {
-  //     setNode1Status(true)
-  //   } else {
-  //     setNode1Status(false)
-  //   }
-  // })
+// fetch(node + "/ping").then((res) => {
+//   if (res.ok) {
+//     setNode1Status(true)
+//   } else {
+//     setNode1Status(false)
+//   }
+// })
 // }
 
 // 主容器
@@ -97,14 +99,14 @@ export function GameMuseumComponent() {
   }, []);
 
   // const DownloadNodeSwitch = () => {
-    // testNode(setNode1Status, "node1")
-    // testNode(setNode2Status, "node2")
-    // testNode(setNode3Status, "node3")
-    // return (
-      // <Tabs defaultValue={downloadNode} className="mb-4" onValueChange={(value) => setDownloadNode(value)}>
-      //   <TabsList className="w-full rounded-md h-[50px] pl-2 pr-2">
-      //     <TabsTrigger className="w-full pb-2" value="node1">
-            {/* <Circle className="h-2 w-2 mr-2" fill={node1status ? "green" : "red"} />
+  // testNode(setNode1Status, "node1")
+  // testNode(setNode2Status, "node2")
+  // testNode(setNode3Status, "node3")
+  // return (
+  // <Tabs defaultValue={downloadNode} className="mb-4" onValueChange={(value) => setDownloadNode(value)}>
+  //   <TabsList className="w-full rounded-md h-[50px] pl-2 pr-2">
+  //     <TabsTrigger className="w-full pb-2" value="node1">
+  {/* <Circle className="h-2 w-2 mr-2" fill={node1status ? "green" : "red"} />
             下载节点 1</TabsTrigger>
           <TabsTrigger className="w-full pb-2" value="node2">
           <Circle className="h-2 w-2 mr-2" fill={node2status ? "green" : "red"} />
@@ -112,7 +114,7 @@ export function GameMuseumComponent() {
           <TabsTrigger className="w-full pb-2"  value="node3">
           <Circle className="h-2 w-2 mr-2" fill={node3status ? "green" : "red"} />
           下载节点 3</TabsTrigger> */}
-        {/* </TabsList>
+  {/* </TabsList>
       </Tabs> */}
   //   )
   // }
@@ -124,7 +126,7 @@ export function GameMuseumComponent() {
         display: "block",
         margin: "0 auto"
       }} />
-      <h1 className="text-4xl font-bold text-center mb-4 mt-4 text-green-50">铁锈战争下载站</h1>
+      <h1 className="text-4xl font-bold text-center mb-4 mt-4 text-[hsl(var(--primary))]">铁锈战争下载站</h1>
 
       <div className="flex justify-center mt-2 mb-4">
         <div className="bg-blue-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-blue-600 border-blue-600 border mr-2">
@@ -144,7 +146,16 @@ export function GameMuseumComponent() {
         maxWidth: "800px",
         margin: "0 auto"
       }}>
-        <TabsList className="w-full rounded-md mt-5 h-[50px] pl-2 pr-2">
+        <div className="mt-5">
+          <Button className="w-full text-center text-lg" variant="outline" onClick={() => {
+            window.open("https://rw.d5v.cc", '_blank')
+          }}>
+            <FaBoxIcon className="mr-2 h-5 w-5" />
+            前往<span className="text-[hsl(var(--primary))]">模组</span>下载站
+            <AiOutlineArrowRight className="h-4" />
+          </Button>
+        </div>
+        <TabsList className="w-full rounded-md h-[50px] pl-2 pr-2 mt-2">
           <TabsTrigger className="w-full pb-2" value="all">全部版本</TabsTrigger>
           <TabsTrigger className="w-full pb-2 ml-2 mr-2" value="vanilla">原版</TabsTrigger>
           <TabsTrigger className="w-full pb-2 " value="thirdParty">第三方版本</TabsTrigger>
@@ -155,7 +166,7 @@ export function GameMuseumComponent() {
           <GameVersionCounter games={gameVersions} />
           <div>
             {gameVersions.map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow}/>
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
             ))}
           </div>
         </TabsContent>
@@ -165,7 +176,7 @@ export function GameMuseumComponent() {
           <GameVersionCounter games={gameVersions.filter((game) => !game.thirdParty)} />
           <div>
             {gameVersions.filter((game) => !game.thirdParty).map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow}/>
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
             ))}
           </div>
         </TabsContent>
@@ -175,7 +186,7 @@ export function GameMuseumComponent() {
           <GameVersionCounter games={gameVersions.filter((game) => game.thirdParty)} />
           <div>
             {gameVersions.filter((game) => game.thirdParty).map((game) => (
-              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow}/>
+              <GameVersionCard key={game.version} game={game} setShowSteamWindow={setShowSteamWindow} />
             ))}
           </div>
         </TabsContent>
@@ -254,11 +265,13 @@ export function GameVersionCard({ game, setShowSteamWindow }: { game: GameVersio
       </CardHeader>
       <CardContent>
         <p className="mb-4">{game.description}</p>
+        <div className="max-w-sm mx-auto">
         <SystemSelector
           systems={availableSystems}
           onSelect={setSelectedSystem}
           selectedSystem={selectedSystem}
         />
+        </div>
       </CardContent>
       <CardFooter className="mt-auto flex flex-col">
         {/* 下载 */}
