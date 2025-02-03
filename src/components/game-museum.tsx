@@ -85,7 +85,7 @@ const testNode = (setNode1Status: Dispatch<SetStateAction<boolean>>, nodeName: s
 // 主容器
 export function GameMuseumComponent() {
   const [showSteamWindow, setShowSteamWindow] = useState(false)
-  const [downloadNode, setDownloadNode] = useState("node1")
+  const [downloadNode, setDownloadNode] = useState("node2")
 
   const [node1status, setNode1Status] = useState(false)
   const [node2status, setNode2Status] = useState(false)

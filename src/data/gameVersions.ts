@@ -11,7 +11,9 @@ export type GameVersion = {
 }
 
 export const downloadNodes: { [key: string]: string }= {
-    "node2": "https://alist2.d5v.cc",
+    "node1": "https://file-01.d5v.cc",
+    "node2": "https://file-02.d5v.cc",
+    "node3": "https://file-03.d5v.cc",
 }
 
 export const gameVersions: GameVersion[] = [
