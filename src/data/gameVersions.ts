@@ -10,12 +10,6 @@ export type GameVersion = {
     downloads: { [key: string]: string } // 下载链接
 }
 
-// export const downloadNodes: { [key: string]: string }= {
-//     "node1": "https://file-01.d5v.cc",
-//     "node2": "https://file-02.d5v.cc",
-//     "node3": "https://file-03.d5v.cc",
-// }
-
 export const gameVersions: GameVersion[] = [
     {
         "version": "铁锈战争 1.15",
