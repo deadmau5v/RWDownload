@@ -20,7 +20,7 @@ export const gameVersions: GameVersion[] = [
         "downloads": {
             "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.15.exe",
             "Android": "%HOST%/d/local/pe/RustedWarfare-1.15.apk",
-            "Linux": "%HOST%/d/local/pe/RustedWarfare1.15.tar"
+            "Linux": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare1.15.tar"
         }
     },
     {
@@ -31,7 +31,7 @@ export const gameVersions: GameVersion[] = [
         "downloads": {
             "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.14.exe",
             "Android": "%HOST%/d/local/pe/RustedWarfare-1.14.apk",
-            "Linux": "%HOST%/d/local/linux/RustedWarfare1.14.tar"
+            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.14.tar"
         }
     },
     {
@@ -167,7 +167,7 @@ export const gameVersions: GameVersion[] = [
         "downloads": {
             "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.13.exe",
             "Android": "%HOST%/d/local/pe/RustedWarfare-1.13.4.apk",
-            "Linux": "%HOST%/d/local/linux/RustedWarfare1.13.tar"
+            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.13.tar"
         }
     },
     {
@@ -177,7 +177,7 @@ export const gameVersions: GameVersion[] = [
         "description": "",
         "downloads": {
             "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.12.exe",
-            "Linux": "%HOST%/d/local/linux/RustedWarfare1.12.tar"
+            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.12.tar"
         }
     },
     {
@@ -187,7 +187,7 @@ export const gameVersions: GameVersion[] = [
         "description": "",
         "downloads": {
             "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.11.exe",
-            "Linux": "%HOST%/d/local/linux/RustedWarfare1.11.tar"
+            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.11.tar"
         }
     },
     {
@@ -197,7 +197,7 @@ export const gameVersions: GameVersion[] = [
         "description": "",
         "downloads": {
             "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.10.exe",
-            "Linux": "%HOST%/d/local/linux/RustedWarfare1.10.tar"
+            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.10.tar"
         }
     },
     {
@@ -206,7 +206,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "很久很久以前",
         "description": "",
         "downloads": {
-            "Linux": "%HOST%/d/local/linux/RustedWarfare1.09.tar",
+            "Linux": "%HOST%/d/pan.d5v.cc/linux/RustedWarfare1.09.tar",
         }
     },
 ]
