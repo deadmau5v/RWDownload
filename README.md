@@ -9,9 +9,7 @@
 
 > 一个简单的网站，用于下载铁锈战争游戏客户端
 
-
 ## 🛠 技术栈 <a name="built-with"></a>
-
 
 > 使用 Vite + React 纯前端
 
@@ -22,7 +20,6 @@
 <!-- 在线演示 -->
 
 ## 🚀 在线演示 <a name="live-demo"></a>
-
 
 - [在线网站](https://pan.d5v.cc)
 
@@ -53,7 +50,6 @@ pnpm build
 
 ## 📝 许可证 <a name="license"></a>
 
-本项目基于MIT许可证开源，请遵守MIT许可证协议
+本项目基于 MIT 许可证开源，请遵守 MIT 许可证协议
 
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
-
