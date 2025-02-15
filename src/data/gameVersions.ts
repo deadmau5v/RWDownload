@@ -18,7 +18,7 @@ export const gameVersions: GameVersion[] = [
         "releaseDate": "2022-11-10",
         "description": "1.15版本更新了少量单位与游戏内容，以及大量Mod特性。",
         "downloads": {
-            "Windows": "%HOST%/d/local/pc/RustedWarfare1.15.zip",
+            "Windows": "%HOST%/d/local/pc/Rusted%20Warfare%201.15.exe",
             "Android": "%HOST%/d/local/pe/RustedWarfare-1.15.apk",
             "Linux": "%HOST%/d/pan.d5v.cc/pe/RustedWarfare1.15.tar",
             "IOS": "*https://file-05.d5v.cc/pan.d5v.cc/ios/RustedWarfare1.15.ipa"
@@ -56,13 +56,14 @@ export const gameVersions: GameVersion[] = [
         }
     },
     {
-        "version": "RWPP 1.3.0",
+        "version": "RWPP 1.4.2",
         "beta": false,
         "thirdParty": true,
         "releaseDate": "2024-10-4",
         "description": "现代化的第三方版本，拥有更现代化的UI，更多开房选项，以及更稳定的游戏体验。",
         "downloads": {
-            "Windows": "%HOST%/d/pan.d5v.cc/pc/RWPP-1.3.0.zip",
+            "Windows": "%HOST%/d/pan.d5v.cc/pc/RWPP-1.4.2.exe",
+            "Android": "%HOST%/d/local/pe/rwpp-android-int-release-1.4.2.apk",
             "Github": "*https://github.com/Minxyzgo/RWPP",
         }
     },
