@@ -86,17 +86,12 @@ body {
   background: #9aa0a6;
 }
 
-/* 客户端风格按钮 */
+/* 客户端风格按钮 - 减少hover效果 */
 .client-button {
   background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
   border: 1px solid #dadce0;
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-.client-button:hover {
-  background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f4 100%);
-  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+  transition: all 0.15s ease-out;
 }
 
 .client-button:active {
@@ -110,11 +105,7 @@ body {
   border: 1px solid #3367d6;
   color: white;
   box-shadow: 0 1px 2px 0 rgba(66, 133, 244, 0.3), 0 1px 3px 1px rgba(66, 133, 244, 0.15);
-}
-
-.client-button-primary:hover {
-  background: linear-gradient(180deg, #3367d6 0%, #2b5ce6 100%);
-  box-shadow: 0 1px 3px 0 rgba(66, 133, 244, 0.3), 0 4px 8px 3px rgba(66, 133, 244, 0.15);
+  transition: all 0.15s ease-out;
 }
 
 .client-button-primary:active {
@@ -122,24 +113,19 @@ body {
   transform: translateY(1px);
 }
 
-/* 客户端风格卡片 */
+/* 客户端风格卡片 - 移除hover效果 */
 .client-card {
   background: #ffffff;
   border: 1px solid #dadce0;
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-.client-card:hover {
-  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
-  transform: translateY(-1px);
+  transition: all 0.2s ease-out;
 }
 
 /* 客户端风格输入框 */
 .client-input {
   background: #ffffff;
   border: 1px solid #dadce0;
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: all 0.15s ease-out;
 }
 
 .client-input:focus {
@@ -148,17 +134,12 @@ body {
   outline: none;
 }
 
-/* 客户端风格标签 */
+/* 客户端风格标签 - 减少hover效果 */
 .client-tab {
   background: transparent;
   border: 1px solid transparent;
   color: #5f6368;
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-.client-tab:hover {
-  background: #f8f9fa;
-  color: #3c4043;
+  transition: all 0.15s ease-out;
 }
 
 .client-tab[data-state="active"] {
@@ -213,11 +194,120 @@ body {
 .icon-apple { color: #000000; }
 .icon-github { color: #24292e; }
 
+/* 切换动画 */
+.slide-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+/* 标签页内容动画 */
+.tab-content {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 卡片列表动画 */
+.card-list-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card-list-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.card-list-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-list-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+/* 搜索框样式 */
+.search-input {
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  font-size: 0.875rem;
+  transition: all 0.15s ease-out;
+  width: 100%;
+}
+
+.search-input:focus {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #9aa0a6;
+}
+
+/* 筛选下拉框样式 */
+.filter-select {
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  transition: all 0.15s ease-out;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+  outline: none;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  .search-filter-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .search-filter-container > * {
+    width: 100%;
   }
 }
 
@@ -253,4 +343,34 @@ body {
 ::selection {
   background: rgba(66, 133, 244, 0.2);
   color: inherit;
+}
+
+/* 空状态样式 */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #5f6368;
+}
+
+.empty-state-icon {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  opacity: 0.5;
+}
+
+/* 清除按钮样式 */
+.clear-button {
+  background: transparent;
+  border: none;
+  color: #5f6368;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-out;
+}
+
+.clear-button:hover {
+  background: #f8f9fa;
+  color: #3c4043;
 }

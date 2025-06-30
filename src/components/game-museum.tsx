@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -34,7 +34,17 @@ import {
   DrawerTitle,
 } from "./ui/drawer";
 import { Alert, AlertTitle } from "@/components/ui/alert";
-import { Search, Download, ExternalLink, Shield, Zap, Eye } from "lucide-react";
+import { 
+  Search, 
+  Download, 
+  ExternalLink, 
+  Shield, 
+  Zap, 
+  Eye, 
+  Filter,
+  X,
+  FileSearch
+} from "lucide-react";
 import { GameVersion, gameVersions } from "@/data/gameVersions";
 import { GrGithub } from "react-icons/gr";
 import { FaShare } from "react-icons/fa6";
@@ -110,6 +120,105 @@ export function GameSteamShare() {
   );
 }
 
+// 搜索和筛选组件
+function SearchAndFilter({
+  searchTerm,
+  setSearchTerm,
+  platformFilter,
+  setPlatformFilter,
+  versionTypeFilter,
+  setVersionTypeFilter,
+}: {
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  platformFilter: string;
+  setPlatformFilter: (platform: string) => void;
+  versionTypeFilter: string;
+  setVersionTypeFilter: (type: string) => void;
+}) {
+  const platforms = ["all", "Windows", "Android", "Linux", "IOS", "Github"];
+  const versionTypes = ["all", "stable", "beta", "thirdParty"];
+
+  const platformLabels: { [key: string]: string } = {
+    all: "全部平台",
+    Windows: "Windows",
+    Android: "Android",
+    Linux: "Linux",
+    IOS: "iOS",
+    Github: "Github",
+  };
+
+  const versionTypeLabels: { [key: string]: string } = {
+    all: "全部类型",
+    stable: "正式版",
+    beta: "测试版",
+    thirdParty: "第三方",
+  };
+
+  return (
+    <div className="mb-6 space-y-4">
+      {/* 搜索框 */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <input
+          type="text"
+          placeholder="搜索版本名称..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        {searchTerm && (
+          <button
+            onClick={() => setSearchTerm("")}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 clear-button"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+
+      {/* 筛选器 */}
+      <div className="search-filter-container flex gap-4">
+        <div className="flex-1">
+          <Select value={platformFilter} onValueChange={setPlatformFilter}>
+            <SelectTrigger className="filter-select">
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-gray-500" />
+                <SelectValue placeholder="选择平台" />
+              </div>
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+              {platforms.map((platform) => (
+                <SelectItem key={platform} value={platform}>
+                  {platformLabels[platform]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex-1">
+          <Select value={versionTypeFilter} onValueChange={setVersionTypeFilter}>
+            <SelectTrigger className="filter-select">
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-gray-500" />
+                <SelectValue placeholder="选择类型" />
+              </div>
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+              {versionTypes.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {versionTypeLabels[type]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function GameVersionCounter({ games }: { games: GameVersion[] }) {
   return (
     <Alert className="mb-6 client-card border-l-4 border-l-blue-500">
@@ -118,6 +227,24 @@ function GameVersionCounter({ games }: { games: GameVersion[] }) {
         共有 <span className="text-blue-600 font-bold text-lg">{games.length}</span> 个版本可供下载
       </AlertTitle>
     </Alert>
+  );
+}
+
+// 空状态组件
+function EmptyState({ searchTerm }: { searchTerm: string }) {
+  return (
+    <div className="empty-state">
+      <FileSearch className="empty-state-icon" />
+      <h3 className="text-lg font-medium text-gray-900 mb-2">
+        {searchTerm ? "未找到匹配的版本" : "暂无版本"}
+      </h3>
+      <p className="text-gray-500">
+        {searchTerm 
+          ? `没有找到包含 "${searchTerm}" 的版本，请尝试其他关键词`
+          : "当前筛选条件下没有可用的版本"
+        }
+      </p>
+    </div>
   );
 }
 
@@ -134,7 +261,7 @@ function FeatureBadges() {
       {features.map((feature, index) => (
         <div
           key={index}
-          className={`client-badge ${feature.style} transition-all duration-200 hover:scale-105`}
+          className={`client-badge ${feature.style}`}
         >
           <feature.icon className="w-4 h-4" />
           <span>{feature.text}</span>
@@ -144,13 +271,90 @@ function FeatureBadges() {
   );
 }
 
+// 游戏版本列表组件
+function GameVersionList({ 
+  games, 
+  setShowSteamWindow 
+}: { 
+  games: GameVersion[];
+  setShowSteamWindow: Dispatch<SetStateAction<boolean>>;
+}) {
+  if (games.length === 0) {
+    return <EmptyState searchTerm="" />;
+  }
+
+  return (
+    <div className="space-y-4">
+      {games.map((game, index) => (
+        <div
+          key={game.version}
+          className="card-list-enter"
+          style={{
+            animationDelay: `${index * 50}ms`,
+            animationFillMode: 'both'
+          }}
+        >
+          <GameVersionCard
+            game={game}
+            setShowSteamWindow={setShowSteamWindow}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // 主容器
 export function GameMuseumComponent() {
   const [showSteamWindow, setShowSteamWindow] = useState(false);
+  const [activeTab, setActiveTab] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [platformFilter, setPlatformFilter] = useState("all");
+  const [versionTypeFilter, setVersionTypeFilter] = useState("all");
 
   useEffect(() => {
     document.title = "铁锈战争下载站";
   }, []);
+
+  // 筛选逻辑
+  const filteredGames = useMemo(() => {
+    let filtered = gameVersions;
+
+    // 按标签页筛选
+    if (activeTab === "vanilla") {
+      filtered = filtered.filter(game => !game.thirdParty);
+    } else if (activeTab === "thirdParty") {
+      filtered = filtered.filter(game => game.thirdParty);
+    }
+
+    // 按搜索词筛选
+    if (searchTerm) {
+      filtered = filtered.filter(game =>
+        game.version.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        game.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // 按平台筛选
+    if (platformFilter !== "all") {
+      filtered = filtered.filter(game =>
+        Object.keys(game.downloads).includes(platformFilter)
+      );
+    }
+
+    // 按版本类型筛选
+    if (versionTypeFilter !== "all") {
+      if (versionTypeFilter === "stable") {
+        filtered = filtered.filter(game => !game.beta && !game.thirdParty);
+      } else if (versionTypeFilter === "beta") {
+        filtered = filtered.filter(game => game.beta);
+      } else if (versionTypeFilter === "thirdParty") {
+        filtered = filtered.filter(game => game.thirdParty);
+      }
+    }
+
+    return filtered;
+  }, [activeTab, searchTerm, platformFilter, versionTypeFilter]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -161,7 +365,7 @@ export function GameMuseumComponent() {
             <img
               src="https://cdn1.d5v.cc/yk6baz03t0m000d5qauzx7785smauwhcDIYPAwFxDwe1DcxxDO==.webp"
               alt="铁锈战争 Logo"
-              className="h-20 md:h-24 mx-auto drop-shadow-sm hover:scale-105 transition-transform duration-200"
+              className="h-20 md:h-24 mx-auto drop-shadow-sm"
             />
           </div>
           
@@ -192,7 +396,7 @@ export function GameMuseumComponent() {
 
         {/* 主要内容区域 */}
         <div className="max-w-4xl mx-auto">
-          <Tabs defaultValue="all" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-3 mb-8 bg-white border border-gray-200 rounded-lg p-1 shadow-sm">
               <TabsTrigger 
                 value="all" 
@@ -214,51 +418,50 @@ export function GameMuseumComponent() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="all" className="space-y-4">
-              <GameVersionCounter games={gameVersions} />
-              <div className="space-y-4">
-                {gameVersions.map((game) => (
-                  <GameVersionCard
-                    key={game.version}
-                    game={game}
-                    setShowSteamWindow={setShowSteamWindow}
-                  />
-                ))}
-              </div>
+            {/* 搜索和筛选 */}
+            <SearchAndFilter
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              platformFilter={platformFilter}
+              setPlatformFilter={setPlatformFilter}
+              versionTypeFilter={versionTypeFilter}
+              setVersionTypeFilter={setVersionTypeFilter}
+            />
+
+            <TabsContent value="all" className="tab-content">
+              <GameVersionCounter games={filteredGames} />
+              {filteredGames.length === 0 ? (
+                <EmptyState searchTerm={searchTerm} />
+              ) : (
+                <GameVersionList 
+                  games={filteredGames} 
+                  setShowSteamWindow={setShowSteamWindow} 
+                />
+              )}
             </TabsContent>
 
-            <TabsContent value="vanilla" className="space-y-4">
-              <GameVersionCounter
-                games={gameVersions.filter((game) => !game.thirdParty)}
-              />
-              <div className="space-y-4">
-                {gameVersions
-                  .filter((game) => !game.thirdParty)
-                  .map((game) => (
-                    <GameVersionCard
-                      key={game.version}
-                      game={game}
-                      setShowSteamWindow={setShowSteamWindow}
-                    />
-                  ))}
-              </div>
+            <TabsContent value="vanilla" className="tab-content">
+              <GameVersionCounter games={filteredGames} />
+              {filteredGames.length === 0 ? (
+                <EmptyState searchTerm={searchTerm} />
+              ) : (
+                <GameVersionList 
+                  games={filteredGames} 
+                  setShowSteamWindow={setShowSteamWindow} 
+                />
+              )}
             </TabsContent>
 
-            <TabsContent value="thirdParty" className="space-y-4">
-              <GameVersionCounter
-                games={gameVersions.filter((game) => game.thirdParty)}
-              />
-              <div className="space-y-4">
-                {gameVersions
-                  .filter((game) => game.thirdParty)
-                  .map((game) => (
-                    <GameVersionCard
-                      key={game.version}
-                      game={game}
-                      setShowSteamWindow={setShowSteamWindow}
-                    />
-                  ))}
-              </div>
+            <TabsContent value="thirdParty" className="tab-content">
+              <GameVersionCounter games={filteredGames} />
+              {filteredGames.length === 0 ? (
+                <EmptyState searchTerm={searchTerm} />
+              ) : (
+                <GameVersionList 
+                  games={filteredGames} 
+                  setShowSteamWindow={setShowSteamWindow} 
+                />
+              )}
             </TabsContent>
           </Tabs>
         </div>
@@ -335,7 +538,7 @@ export function GameVersionCard({
         <CardTitle className="flex flex-col items-center text-center">
           <Link
             to={`/v/${encodeURIComponent(game.version)}`}
-            className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors duration-200 mb-3"
+            className="text-xl font-bold text-gray-900 transition-colors duration-200 mb-3"
           >
             {game.version}
           </Link>
