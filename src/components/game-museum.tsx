@@ -318,7 +318,7 @@ export function GameVersionCard({
     if (selectedSystem) {
       setShowSteamWindow(true);
       let url = game.downloads[selectedSystem];
-      url = url.replace("%HOST%", "https://file-01.d5v.cc");
+      // url = url.replace("%HOST%", "https://file-02.d5v.cc");
 
       if (url.startsWith("*")) {
         window.open(url.slice(1), "_blank");
