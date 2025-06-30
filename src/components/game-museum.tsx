@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -20,7 +19,6 @@ import {
   AiOutlineLinux,
   AiFillAndroid,
   AiFillApple,
-  AiOutlineCloudDownload,
   AiFillBug,
   AiFillStar,
 } from "react-icons/ai";
@@ -46,7 +44,6 @@ import {
 } from "lucide-react";
 import { GameVersion, gameVersions } from "@/data/gameVersions";
 import { GrGithub } from "react-icons/gr";
-import { FaShare } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { FaBox as FaBoxIcon } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
