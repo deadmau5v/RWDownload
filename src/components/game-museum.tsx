@@ -50,10 +50,10 @@ const SystemSelectItem = ({
   icon: React.ReactNode;
 }) => {
   return (
-    <SelectItem value={value}>
+    <SelectItem value={value} className="focus:bg-gray-50">
       <div className="flex items-center">
         {icon}
-        {value}
+        <span className="font-medium">{value}</span>
       </div>
     </SelectItem>
   );
@@ -70,11 +70,11 @@ const SystemSelector = ({
   selectedSystem: string | undefined;
 }) => {
   const icons: { [key: string]: React.ReactNode } = {
-    Windows: <AiFillWindows className="mr-2 h-4 w-4 text-blue-500" />,
-    Linux: <AiOutlineLinux className="mr-2 h-4 w-4 text-orange-500" />,
-    IOS: <AiFillApple className="mr-2 h-4 w-4 text-gray-600" />,
-    Android: <AiFillAndroid className="mr-2 h-4 w-4 text-green-500" />,
-    Github: <GrGithub className="mr-2 h-4 w-4 text-gray-800" />,
+    Windows: <AiFillWindows className="mr-3 h-4 w-4 icon-windows" />,
+    Linux: <AiOutlineLinux className="mr-3 h-4 w-4 icon-linux" />,
+    IOS: <AiFillApple className="mr-3 h-4 w-4 icon-apple" />,
+    Android: <AiFillAndroid className="mr-3 h-4 w-4 icon-android" />,
+    Github: <GrGithub className="mr-3 h-4 w-4 icon-github" />,
   };
 
   const items = systems.map((system) => (
@@ -83,10 +83,10 @@ const SystemSelector = ({
 
   return (
     <Select onValueChange={onSelect} value={selectedSystem}>
-      <SelectTrigger className="w-full bg-white/80 backdrop-blur-sm border-gray-200 hover:border-primary/50 transition-all duration-200">
-        <SelectValue placeholder="选择版本" />
+      <SelectTrigger className="client-input h-11 font-medium">
+        <SelectValue placeholder="选择平台" />
       </SelectTrigger>
-      <SelectContent className="bg-white/95 backdrop-blur-md border-gray-200">
+      <SelectContent className="bg-white border border-gray-200 shadow-lg">
         {items}
       </SelectContent>
     </Select>
@@ -97,13 +97,13 @@ const SystemSelector = ({
 export function GameSteamShare() {
   return (
     <div className="mx-auto max-w-2xl p-6">
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+      <div className="client-card rounded-lg p-4">
         <iframe
           title="steam"
           src="https://store.steampowered.com/widget/647960/"
           width="100%"
           height="190"
-          className="rounded-lg shadow-sm"
+          className="rounded border border-gray-200"
         ></iframe>
       </div>
     </div>
@@ -112,11 +112,10 @@ export function GameSteamShare() {
 
 function GameVersionCounter({ games }: { games: GameVersion[] }) {
   return (
-    <Alert className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+    <Alert className="mb-6 client-card border-l-4 border-l-blue-500">
       <Search className="h-4 w-4 text-blue-600" />
-      <AlertTitle className="text-gray-700">
-        总共有 <span className="text-blue-600 text-xl font-bold">{games.length}</span>{" "}
-        个版本可供下载
+      <AlertTitle className="text-gray-800 font-medium">
+        共有 <span className="text-blue-600 font-bold text-lg">{games.length}</span> 个版本可供下载
       </AlertTitle>
     </Alert>
   );
@@ -125,9 +124,9 @@ function GameVersionCounter({ games }: { games: GameVersion[] }) {
 // 特性标签组件
 function FeatureBadges() {
   const features = [
-    { icon: Shield, text: "免登录", color: "blue" },
-    { icon: Zap, text: "不限速", color: "green" },
-    { icon: Eye, text: "无广告", color: "purple" },
+    { icon: Shield, text: "免登录", style: "client-badge-info" },
+    { icon: Zap, text: "不限速", style: "client-badge-success" },
+    { icon: Eye, text: "无广告", style: "client-badge-warning" },
   ];
 
   return (
@@ -135,19 +134,9 @@ function FeatureBadges() {
       {features.map((feature, index) => (
         <div
           key={index}
-          className={`
-            flex items-center px-4 py-2 rounded-full text-sm font-medium
-            bg-gradient-to-r shadow-sm border transition-all duration-200 hover:scale-105
-            ${
-              feature.color === "blue"
-                ? "from-blue-50 to-blue-100 text-blue-700 border-blue-200 hover:shadow-blue-200/50"
-                : feature.color === "green"
-                ? "from-green-50 to-green-100 text-green-700 border-green-200 hover:shadow-green-200/50"
-                : "from-purple-50 to-purple-100 text-purple-700 border-purple-200 hover:shadow-purple-200/50"
-            }
-          `}
+          className={`client-badge ${feature.style} transition-all duration-200 hover:scale-105`}
         >
-          <feature.icon className="w-4 h-4 mr-2" />
+          <feature.icon className="w-4 h-4" />
           <span>{feature.text}</span>
         </div>
       ))}
@@ -164,76 +153,70 @@ export function GameMuseumComponent() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
-      {/* 背景装饰 */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-green-100 rounded-full opacity-20 blur-3xl"></div>
-      </div>
-
-      <div className="relative container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* 头部区域 */}
         <div className="text-center mb-12">
           <div className="mb-6">
             <img
               src="https://cdn1.d5v.cc/yk6baz03t0m000d5qauzx7785smauwhcDIYPAwFxDwe1DcxxDO==.webp"
               alt="铁锈战争 Logo"
-              className="h-24 md:h-32 mx-auto drop-shadow-lg hover:scale-105 transition-transform duration-300"
+              className="h-20 md:h-24 mx-auto drop-shadow-sm hover:scale-105 transition-transform duration-200"
             />
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
             铁锈战争下载站
           </h1>
           
-          <p className="text-gray-600 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
-            提供最新版本的铁锈战争游戏下载，支持多平台，快速安全
+          <p className="text-gray-600 text-base md:text-lg mb-8 max-w-2xl mx-auto">
+            提供最新版本的铁锈战争游戏下载，支持多平台，安全可靠
           </p>
 
           <FeatureBadges />
 
           {/* 模组下载站按钮 */}
           <div className="mb-8">
-            <Button
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            <button
+              className="client-button-primary px-6 py-3 rounded font-medium inline-flex items-center gap-2 text-sm"
               onClick={() => {
                 window.open("https://rw.d5v.cc", "_blank");
               }}
             >
-              <FaBoxIcon className="mr-3 h-5 w-5" />
+              <FaBoxIcon className="h-4 w-4" />
               前往模组下载站
-              <AiOutlineArrowRight className="ml-3 h-5 w-5" />
-            </Button>
+              <AiOutlineArrowRight className="h-4 w-4" />
+            </button>
           </div>
         </div>
 
         {/* 主要内容区域 */}
         <div className="max-w-4xl mx-auto">
           <Tabs defaultValue="all" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-2 shadow-sm">
+            <TabsList className="grid w-full grid-cols-3 mb-8 bg-white border border-gray-200 rounded-lg p-1 shadow-sm">
               <TabsTrigger 
                 value="all" 
-                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white transition-all duration-200"
+                className="client-tab rounded-md py-2 px-4 text-sm font-medium"
               >
                 全部版本
               </TabsTrigger>
               <TabsTrigger 
                 value="vanilla"
-                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-blue-500 data-[state=active]:text-white transition-all duration-200"
+                className="client-tab rounded-md py-2 px-4 text-sm font-medium"
               >
                 原版
               </TabsTrigger>
               <TabsTrigger 
                 value="thirdParty"
-                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-200"
+                className="client-tab rounded-md py-2 px-4 text-sm font-medium"
               >
                 第三方版本
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="all" className="space-y-6">
+            <TabsContent value="all" className="space-y-4">
               <GameVersionCounter games={gameVersions} />
-              <div className="grid gap-6">
+              <div className="space-y-4">
                 {gameVersions.map((game) => (
                   <GameVersionCard
                     key={game.version}
@@ -244,11 +227,11 @@ export function GameMuseumComponent() {
               </div>
             </TabsContent>
 
-            <TabsContent value="vanilla" className="space-y-6">
+            <TabsContent value="vanilla" className="space-y-4">
               <GameVersionCounter
                 games={gameVersions.filter((game) => !game.thirdParty)}
               />
-              <div className="grid gap-6">
+              <div className="space-y-4">
                 {gameVersions
                   .filter((game) => !game.thirdParty)
                   .map((game) => (
@@ -261,11 +244,11 @@ export function GameMuseumComponent() {
               </div>
             </TabsContent>
 
-            <TabsContent value="thirdParty" className="space-y-6">
+            <TabsContent value="thirdParty" className="space-y-4">
               <GameVersionCounter
                 games={gameVersions.filter((game) => game.thirdParty)}
               />
-              <div className="grid gap-6">
+              <div className="space-y-4">
                 {gameVersions
                   .filter((game) => game.thirdParty)
                   .map((game) => (
@@ -283,12 +266,12 @@ export function GameMuseumComponent() {
 
       {/* Steam 弹窗 */}
       <Drawer open={showSteamWindow} onClose={() => setShowSteamWindow(false)}>
-        <DrawerContent className="bg-white/95 backdrop-blur-md border-t border-gray-200">
+        <DrawerContent className="bg-white border-t border-gray-200">
           <DrawerHeader className="text-center">
-            <DrawerTitle className="text-2xl font-bold text-gray-800">
-              下载已开始 🎉
+            <DrawerTitle className="text-xl font-bold text-gray-900">
+              下载已开始
             </DrawerTitle>
-            <DrawerDescription className="text-gray-600 text-lg">
+            <DrawerDescription className="text-gray-600">
               是否考虑支持正版游戏？
             </DrawerDescription>
           </DrawerHeader>
@@ -332,14 +315,14 @@ export function GameVersionCard({
     if (selectedSystem && game.downloads[selectedSystem].startsWith("*")) {
       setDownloadButtonMessage(
         <>
-          <ExternalLink className="mr-2 h-4 w-4" />
+          <ExternalLink className="h-4 w-4" />
           前往 {selectedSystem}
         </>
       );
     } else {
       setDownloadButtonMessage(
         <>
-          <Download className="mr-2 h-4 w-4" />
+          <Download className="h-4 w-4" />
           下载 {selectedSystem} 版
         </>
       );
@@ -347,39 +330,39 @@ export function GameVersionCard({
   }, [game.downloads, selectedSystem]);
 
   return (
-    <Card className="group bg-white/80 backdrop-blur-sm border border-gray-200 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-blue-100/50 hover:-translate-y-1">
+    <Card className="client-card rounded-lg">
       <CardHeader className="pb-4">
         <CardTitle className="flex flex-col items-center text-center">
           <Link
             to={`/v/${encodeURIComponent(game.version)}`}
-            className="text-2xl font-bold text-gray-800 hover:text-primary transition-colors duration-300 mb-3"
+            className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors duration-200 mb-3"
           >
             {game.version}
           </Link>
           
           <div className="flex flex-wrap items-center justify-center gap-2">
             {game.beta ? (
-              <div className="flex items-center px-3 py-1 bg-gradient-to-r from-red-50 to-red-100 rounded-full text-red-700 border border-red-200 text-sm font-medium">
-                <AiFillBug className="mr-1 h-4 w-4" />
+              <div className="client-badge client-badge-error">
+                <AiFillBug className="h-3 w-3" />
                 <span>测试版</span>
               </div>
             ) : (
-              <div className="flex items-center px-3 py-1 bg-gradient-to-r from-green-50 to-green-100 rounded-full text-green-700 border border-green-200 text-sm font-medium">
-                <FaBox className="mr-1 h-4 w-4" />
+              <div className="client-badge client-badge-success">
+                <FaBox className="h-3 w-3" />
                 <span>正式版</span>
               </div>
             )}
             
             {game.recommended && (
-              <div className="flex items-center px-3 py-1 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-full text-yellow-700 border border-yellow-200 text-sm font-medium">
-                <AiFillStar className="mr-1 h-4 w-4" />
+              <div className="client-badge client-badge-warning">
+                <AiFillStar className="h-3 w-3" />
                 <span>推荐</span>
               </div>
             )}
             
             {game.thirdParty && (
-              <div className="flex items-center px-3 py-1 bg-gradient-to-r from-purple-50 to-purple-100 rounded-full text-purple-700 border border-purple-200 text-sm font-medium">
-                <FaBox className="mr-1 h-4 w-4" />
+              <div className="client-badge client-badge-info">
+                <FaBox className="h-3 w-3" />
                 <span>第三方</span>
               </div>
             )}
@@ -387,18 +370,18 @@ export function GameVersionCard({
         </CardTitle>
         
         {game.releaseDate && (
-          <CardDescription className="text-center text-gray-500 mt-2">
+          <CardDescription className="text-center text-gray-500 text-sm mt-2">
             发布于: {game.releaseDate}
           </CardDescription>
         )}
       </CardHeader>
       
       <CardContent className="px-6 pb-4">
-        <p className="text-gray-600 text-center mb-6 leading-relaxed">
+        <p className="text-gray-600 text-center mb-6 text-sm leading-relaxed">
           {game.description}
         </p>
         
-        <div className="max-w-sm mx-auto">
+        <div className="max-w-xs mx-auto">
           <SystemSelector
             systems={availableSystems}
             onSelect={setSelectedSystem}
@@ -408,13 +391,15 @@ export function GameVersionCard({
       </CardContent>
       
       <CardFooter className="px-6 pb-6">
-        <Button
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+        <button
+          className={`w-full client-button-primary py-3 rounded font-medium inline-flex items-center justify-center gap-2 text-sm ${
+            !selectedSystem ? 'disabled' : ''
+          }`}
           disabled={!selectedSystem}
           onClick={handleDownload}
         >
           {downloadButtonMessage}
-        </Button>
+        </button>
       </CardFooter>
     </Card>
   );

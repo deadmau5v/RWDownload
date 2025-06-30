@@ -7,7 +7,7 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-gray-50">
           <Helmet>
             <title>铁锈战争下载站 - 免费下载铁锈战争游戏</title>
             <meta
@@ -19,7 +19,7 @@ function App() {
               content="铁锈战争,铁锈战争下载,Rusted Warfare,RTS游戏,策略游戏,免费下载,多平台"
             />
             <link rel="canonical" href={window.location.href} />
-            <meta name="theme-color" content="#3b82f6" />
+            <meta name="theme-color" content="#4285f4" />
             <meta property="og:type" content="website" />
             <meta property="og:title" content="铁锈战争下载站 - 免费下载铁锈战争游戏" />
             <meta property="og:description" content="提供各个版本的铁锈战争游戏下载，支持多个平台，免登录、不限速、无广告。" />
