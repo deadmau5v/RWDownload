@@ -86,7 +86,7 @@ body {
   background: #9aa0a6;
 }
 
-/* 客户端风格按钮 - 减少hover效果 */
+/* 客户端风格按钮 - 绿色主题 */
 .client-button {
   background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
   border: 1px solid #dadce0;
@@ -101,55 +101,48 @@ body {
 }
 
 .client-button-primary {
-  background: linear-gradient(180deg, #4285f4 0%, #3367d6 100%);
-  border: 1px solid #3367d6;
+  background: linear-gradient(180deg, #34a853 0%, #2d8f47 100%);
+  border: 1px solid #2d8f47;
   color: white;
-  box-shadow: 0 1px 2px 0 rgba(66, 133, 244, 0.3), 0 1px 3px 1px rgba(66, 133, 244, 0.15);
+  box-shadow: 0 1px 2px 0 rgba(52, 168, 83, 0.3), 0 1px 3px 1px rgba(52, 168, 83, 0.15);
   transition: all 0.15s ease-out;
 }
 
 .client-button-primary:active {
-  background: linear-gradient(180deg, #2b5ce6 0%, #1a73e8 100%);
+  background: linear-gradient(180deg, #2d8f47 0%, #1e7e34 100%);
   transform: translateY(1px);
 }
 
-/* 客户端风格卡片 - 移除hover效果 */
+.client-button-primary.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 客户端风格卡片 */
 .client-card {
   background: #ffffff;
   border: 1px solid #dadce0;
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
   transition: all 0.2s ease-out;
+  color: #1a1a1a;
 }
 
-/* 客户端风格输入框 */
+/* 客户端风格输入框 - 绿色主题 */
 .client-input {
   background: #ffffff;
   border: 1px solid #dadce0;
   transition: all 0.15s ease-out;
+  color: #1a1a1a;
 }
 
 .client-input:focus {
-  border-color: #4285f4;
-  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+  border-color: #34a853;
+  box-shadow: 0 0 0 2px rgba(52, 168, 83, 0.2);
   outline: none;
 }
 
-/* 客户端风格标签 - 减少hover效果 */
-.client-tab {
-  background: transparent;
-  border: 1px solid transparent;
-  color: #5f6368;
-  transition: all 0.15s ease-out;
-}
-
-.client-tab[data-state="active"] {
-  background: #ffffff;
-  border-color: #dadce0;
-  color: #1a73e8;
-  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-}
-
-/* 客户端风格徽章 */
+/* 客户端风格徽章 - 绿色主题 */
 .client-badge {
   background: #f8f9fa;
   border: 1px solid #dadce0;
@@ -165,8 +158,8 @@ body {
 
 .client-badge-success {
   background: #e8f5e8;
-  border-color: #c8e6c9;
-  color: #2e7d32;
+  border-color: #34a853;
+  color: #1e7e34;
 }
 
 .client-badge-warning {
@@ -182,9 +175,9 @@ body {
 }
 
 .client-badge-info {
-  background: #e3f2fd;
-  border-color: #bbdefb;
-  color: #1976d2;
+  background: #e8f5e8;
+  border-color: #34a853;
+  color: #1e7e34;
 }
 
 /* 系统图标颜色 */
@@ -217,8 +210,8 @@ body {
   transition: opacity 300ms ease-out, transform 300ms ease-out;
 }
 
-/* 标签页内容动画 */
-.tab-content {
+/* 内容动画 */
+.content-animation {
   animation: slideInUp 0.3s ease-out;
 }
 
@@ -237,26 +230,17 @@ body {
 .card-list-enter {
   opacity: 0;
   transform: translateY(20px);
+  animation: cardEnter 0.3s ease-out forwards;
 }
 
-.card-list-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+@keyframes cardEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.card-list-exit {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.card-list-exit-active {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-/* 搜索框样式 */
+/* 搜索框样式 - 绿色主题 */
 .search-input {
   background: #ffffff;
   border: 1px solid #dadce0;
@@ -265,11 +249,12 @@ body {
   font-size: 0.875rem;
   transition: all 0.15s ease-out;
   width: 100%;
+  color: #1a1a1a;
 }
 
 .search-input:focus {
-  border-color: #4285f4;
-  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+  border-color: #34a853;
+  box-shadow: 0 0 0 2px rgba(52, 168, 83, 0.2);
   outline: none;
 }
 
@@ -277,7 +262,7 @@ body {
   color: #9aa0a6;
 }
 
-/* 筛选下拉框样式 */
+/* 筛选下拉框样式 - 绿色主题 */
 .filter-select {
   background: #ffffff;
   border: 1px solid #dadce0;
@@ -286,11 +271,12 @@ body {
   font-size: 0.875rem;
   transition: all 0.15s ease-out;
   cursor: pointer;
+  color: #1a1a1a;
 }
 
 .filter-select:focus {
-  border-color: #4285f4;
-  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+  border-color: #34a853;
+  box-shadow: 0 0 0 2px rgba(52, 168, 83, 0.2);
   outline: none;
 }
 
@@ -311,18 +297,18 @@ body {
   }
 }
 
-/* 焦点可见性 */
+/* 焦点可见性 - 绿色主题 */
 .focus-visible:focus-visible {
-  outline: 2px solid #4285f4;
+  outline: 2px solid #34a853;
   outline-offset: 2px;
 }
 
-/* 加载动画 */
+/* 加载动画 - 绿色主题 */
 .loading-spinner {
   width: 20px;
   height: 20px;
   border: 2px solid #dadce0;
-  border-top: 2px solid #4285f4;
+  border-top: 2px solid #34a853;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -339,9 +325,9 @@ body {
   pointer-events: none;
 }
 
-/* 文字选择 */
+/* 文字选择 - 绿色主题 */
 ::selection {
-  background: rgba(66, 133, 244, 0.2);
+  background: rgba(52, 168, 83, 0.2);
   color: inherit;
 }
 
@@ -372,5 +358,25 @@ body {
 
 .clear-button:hover {
   background: #f8f9fa;
+  color: #3c4043;
+}
+
+/* 卡片标题样式 */
+.card-title {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.card-title:hover {
+  color: #34a853;
+}
+
+/* 卡片描述样式 */
+.card-description {
+  color: #5f6368;
+}
+
+/* 卡片内容样式 */
+.card-content {
   color: #3c4043;
 }

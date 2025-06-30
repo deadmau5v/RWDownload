@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -221,10 +220,10 @@ function SearchAndFilter({
 
 function GameVersionCounter({ games }: { games: GameVersion[] }) {
   return (
-    <Alert className="mb-6 client-card border-l-4 border-l-blue-500">
-      <Search className="h-4 w-4 text-blue-600" />
+    <Alert className="mb-6 client-card border-l-4 border-l-green-500">
+      <Search className="h-4 w-4 text-green-600" />
       <AlertTitle className="text-gray-800 font-medium">
-        共有 <span className="text-blue-600 font-bold text-lg">{games.length}</span> 个版本可供下载
+        共有 <span className="text-green-600 font-bold text-lg">{games.length}</span> 个版本可供下载
       </AlertTitle>
     </Alert>
   );
@@ -307,7 +306,6 @@ function GameVersionList({
 // 主容器
 export function GameMuseumComponent() {
   const [showSteamWindow, setShowSteamWindow] = useState(false);
-  const [activeTab, setActiveTab] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [platformFilter, setPlatformFilter] = useState("all");
   const [versionTypeFilter, setVersionTypeFilter] = useState("all");
@@ -319,13 +317,6 @@ export function GameMuseumComponent() {
   // 筛选逻辑
   const filteredGames = useMemo(() => {
     let filtered = gameVersions;
-
-    // 按标签页筛选
-    if (activeTab === "vanilla") {
-      filtered = filtered.filter(game => !game.thirdParty);
-    } else if (activeTab === "thirdParty") {
-      filtered = filtered.filter(game => game.thirdParty);
-    }
 
     // 按搜索词筛选
     if (searchTerm) {
@@ -354,7 +345,7 @@ export function GameMuseumComponent() {
     }
 
     return filtered;
-  }, [activeTab, searchTerm, platformFilter, versionTypeFilter]);
+  }, [searchTerm, platformFilter, versionTypeFilter]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -396,74 +387,27 @@ export function GameMuseumComponent() {
 
         {/* 主要内容区域 */}
         <div className="max-w-4xl mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8 bg-white border border-gray-200 rounded-lg p-1 shadow-sm">
-              <TabsTrigger 
-                value="all" 
-                className="client-tab rounded-md py-2 px-4 text-sm font-medium"
-              >
-                全部版本
-              </TabsTrigger>
-              <TabsTrigger 
-                value="vanilla"
-                className="client-tab rounded-md py-2 px-4 text-sm font-medium"
-              >
-                原版
-              </TabsTrigger>
-              <TabsTrigger 
-                value="thirdParty"
-                className="client-tab rounded-md py-2 px-4 text-sm font-medium"
-              >
-                第三方版本
-              </TabsTrigger>
-            </TabsList>
+          {/* 搜索和筛选 */}
+          <SearchAndFilter
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            platformFilter={platformFilter}
+            setPlatformFilter={setPlatformFilter}
+            versionTypeFilter={versionTypeFilter}
+            setVersionTypeFilter={setVersionTypeFilter}
+          />
 
-            {/* 搜索和筛选 */}
-            <SearchAndFilter
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              platformFilter={platformFilter}
-              setPlatformFilter={setPlatformFilter}
-              versionTypeFilter={versionTypeFilter}
-              setVersionTypeFilter={setVersionTypeFilter}
-            />
-
-            <TabsContent value="all" className="tab-content">
-              <GameVersionCounter games={filteredGames} />
-              {filteredGames.length === 0 ? (
-                <EmptyState searchTerm={searchTerm} />
-              ) : (
-                <GameVersionList 
-                  games={filteredGames} 
-                  setShowSteamWindow={setShowSteamWindow} 
-                />
-              )}
-            </TabsContent>
-
-            <TabsContent value="vanilla" className="tab-content">
-              <GameVersionCounter games={filteredGames} />
-              {filteredGames.length === 0 ? (
-                <EmptyState searchTerm={searchTerm} />
-              ) : (
-                <GameVersionList 
-                  games={filteredGames} 
-                  setShowSteamWindow={setShowSteamWindow} 
-                />
-              )}
-            </TabsContent>
-
-            <TabsContent value="thirdParty" className="tab-content">
-              <GameVersionCounter games={filteredGames} />
-              {filteredGames.length === 0 ? (
-                <EmptyState searchTerm={searchTerm} />
-              ) : (
-                <GameVersionList 
-                  games={filteredGames} 
-                  setShowSteamWindow={setShowSteamWindow} 
-                />
-              )}
-            </TabsContent>
-          </Tabs>
+          <div className="content-animation">
+            <GameVersionCounter games={filteredGames} />
+            {filteredGames.length === 0 ? (
+              <EmptyState searchTerm={searchTerm} />
+            ) : (
+              <GameVersionList 
+                games={filteredGames} 
+                setShowSteamWindow={setShowSteamWindow} 
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -538,7 +482,7 @@ export function GameVersionCard({
         <CardTitle className="flex flex-col items-center text-center">
           <Link
             to={`/v/${encodeURIComponent(game.version)}`}
-            className="text-xl font-bold text-gray-900 transition-colors duration-200 mb-3"
+            className="card-title text-xl font-bold mb-3"
           >
             {game.version}
           </Link>
@@ -573,14 +517,14 @@ export function GameVersionCard({
         </CardTitle>
         
         {game.releaseDate && (
-          <CardDescription className="text-center text-gray-500 text-sm mt-2">
+          <CardDescription className="card-description text-center text-sm mt-2">
             发布于: {game.releaseDate}
           </CardDescription>
         )}
       </CardHeader>
       
       <CardContent className="px-6 pb-4">
-        <p className="text-gray-600 text-center mb-6 text-sm leading-relaxed">
+        <p className="card-content text-center mb-6 text-sm leading-relaxed">
           {game.description}
         </p>
         
