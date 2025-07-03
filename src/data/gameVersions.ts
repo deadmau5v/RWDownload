@@ -19,7 +19,7 @@ export const gameVersions: GameVersion[] = [
       Windows: "https://file-02.d5v.cc/d/l/RW/pc/Rusted%20Warfare%201.15.exe",
       Android: "https://file-02.d5v.cc/d/l/RW/pe/RustedWarfare-1.15.apk",
       Linux: "https://file-02.d5v.cc/d/l/RW/linux/RustedWarfare1.15.tar",
-      IOS: "*https://file-02.d5v.cc/l/RW/ios/RustedWarfare1.15.ipa",
+      // IOS: "*https://file-02.d5v.cc/l/RW/ios/RustedWarfare1.15.ipa",
     },
   },
   {
@@ -54,18 +54,6 @@ export const gameVersions: GameVersion[] = [
     thirdParty: true,
     downloads: {
       Android: "https://file-02.d5v.cc/d/l/RW/pe/RustedWarfare-1.14-20players.apk",
-    },
-  },
-  {
-    version: "RWPP 1.4.2",
-    beta: false,
-    thirdParty: true,
-    releaseDate: "2024-10-4",
-    description:
-      "现代化的第三方版本，拥有更现代化的UI，更多开房选项，以及更稳定的游戏体验。",
-    downloads: {
-      Windows: "https://file-02.d5v.cc/d/l/RW/pc/RWPP1.4.2.zip",
-      Github: "*https://github.com/Minxyzgo/RWPP",
     },
   },
   {
