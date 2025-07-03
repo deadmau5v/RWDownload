@@ -1,6 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dispatch, SetStateAction, useEffect, useState, useMemo } from "react";
 import {
   Card,
   CardContent,
@@ -21,7 +19,6 @@ import {
   AiOutlineLinux,
   AiFillAndroid,
   AiFillApple,
-  AiOutlineCloudDownload,
   AiFillBug,
   AiFillStar,
 } from "react-icons/ai";
@@ -34,10 +31,19 @@ import {
   DrawerTitle,
 } from "./ui/drawer";
 import { Alert, AlertTitle } from "@/components/ui/alert";
-import { Search } from "lucide-react";
+import { 
+  Search, 
+  Download, 
+  ExternalLink, 
+  Shield, 
+  Zap, 
+  Eye, 
+  Filter,
+  X,
+  FileSearch
+} from "lucide-react";
 import { GameVersion, gameVersions } from "@/data/gameVersions";
 import { GrGithub } from "react-icons/gr";
-import { FaShare } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { FaBox as FaBoxIcon } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -50,10 +56,10 @@ const SystemSelectItem = ({
   icon: React.ReactNode;
 }) => {
   return (
-    <SelectItem value={value}>
+    <SelectItem value={value} className="focus:bg-gray-50">
       <div className="flex items-center">
         {icon}
-        {value}
+        <span className="font-medium">{value}</span>
       </div>
     </SelectItem>
   );
@@ -70,11 +76,11 @@ const SystemSelector = ({
   selectedSystem: string | undefined;
 }) => {
   const icons: { [key: string]: React.ReactNode } = {
-    Windows: <AiFillWindows className="mr-2 h-4 w-4" />,
-    Linux: <AiOutlineLinux className="mr-2 h-4 w-4" />,
-    IOS: <AiFillApple className="mr-2 h-4 w-4" />,
-    Android: <AiFillAndroid className="mr-2 h-4 w-4" />,
-    Github: <GrGithub className="mr-2 h-4 w-4" />,
+    Windows: <AiFillWindows className="mr-3 h-4 w-4 icon-windows" />,
+    Linux: <AiOutlineLinux className="mr-3 h-4 w-4 icon-linux" />,
+    IOS: <AiFillApple className="mr-3 h-4 w-4 icon-apple" />,
+    Android: <AiFillAndroid className="mr-3 h-4 w-4 icon-android" />,
+    Github: <GrGithub className="mr-3 h-4 w-4 icon-github" />,
   };
 
   const items = systems.map((system) => (
@@ -83,10 +89,12 @@ const SystemSelector = ({
 
   return (
     <Select onValueChange={onSelect} value={selectedSystem}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="选择版本" />
+      <SelectTrigger className="client-input h-11 font-medium">
+        <SelectValue placeholder="选择平台" />
       </SelectTrigger>
-      <SelectContent>{items}</SelectContent>
+      <SelectContent className="bg-white border border-gray-200 shadow-lg">
+        {items}
+      </SelectContent>
     </Select>
   );
 };
@@ -94,205 +102,322 @@ const SystemSelector = ({
 // Steam游戏分享嵌入块
 export function GameSteamShare() {
   return (
-    <div
-      className="m-5 mx-auto max-w-lg"
-      style={{
-        width: "100%",
-        maxWidth: "800px",
-      }}
-    >
-      <iframe
-        title="steam"
-        src="https://store.steampowered.com/widget/647960/"
-        width="100%"
-        height="190"
-      ></iframe>
+    <div className="mx-auto max-w-2xl p-6">
+      <div className="client-card rounded-lg p-4">
+        <iframe
+          title="steam"
+          src="https://store.steampowered.com/widget/647960/"
+          width="100%"
+          height="190"
+          className="rounded border border-gray-200"
+        ></iframe>
+      </div>
+    </div>
+  );
+}
+
+// 搜索和筛选组件
+function SearchAndFilter({
+  searchTerm,
+  setSearchTerm,
+  platformFilter,
+  setPlatformFilter,
+  versionTypeFilter,
+  setVersionTypeFilter,
+}: {
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  platformFilter: string;
+  setPlatformFilter: (platform: string) => void;
+  versionTypeFilter: string;
+  setVersionTypeFilter: (type: string) => void;
+}) {
+  const platforms = ["all", "Windows", "Android", "Linux", "IOS", "Github"];
+  const versionTypes = ["all", "stable", "beta", "thirdParty"];
+
+  const platformLabels: { [key: string]: string } = {
+    all: "全部平台",
+    Windows: "Windows",
+    Android: "Android",
+    Linux: "Linux",
+    IOS: "iOS",
+    Github: "Github",
+  };
+
+  const versionTypeLabels: { [key: string]: string } = {
+    all: "全部类型",
+    stable: "正式版",
+    beta: "测试版",
+    thirdParty: "第三方",
+  };
+
+  return (
+    <div className="mb-6 space-y-4">
+      {/* 搜索框 */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <input
+          type="text"
+          placeholder="搜索版本名称..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        {searchTerm && (
+          <button
+            onClick={() => setSearchTerm("")}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 clear-button"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+
+      {/* 筛选器 */}
+      <div className="search-filter-container flex gap-4">
+        <div className="flex-1">
+          <Select value={platformFilter} onValueChange={setPlatformFilter}>
+            <SelectTrigger className="filter-select">
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-gray-500" />
+                <SelectValue placeholder="选择平台" />
+              </div>
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+              {platforms.map((platform) => (
+                <SelectItem key={platform} value={platform}>
+                  {platformLabels[platform]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex-1">
+          <Select value={versionTypeFilter} onValueChange={setVersionTypeFilter}>
+            <SelectTrigger className="filter-select">
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-gray-500" />
+                <SelectValue placeholder="选择类型" />
+              </div>
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+              {versionTypes.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {versionTypeLabels[type]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
     </div>
   );
 }
 
 function GameVersionCounter({ games }: { games: GameVersion[] }) {
   return (
-    <Alert className="mb-2">
-      <Search className="h-4 w-4" />
-      <AlertTitle>
-        总共有 <span className="text-blue-500 text-lg">{games.length}</span>{" "}
-        个版本
+    <Alert className="mb-6 client-card border-l-4 border-l-green-500">
+      <Search className="h-4 w-4 text-green-600" />
+      <AlertTitle className="text-gray-800 font-medium">
+        共有 <span className="text-green-600 font-bold text-lg">{games.length}</span> 个版本可供下载
       </AlertTitle>
     </Alert>
   );
 }
 
-// const testNode = (setNode1Status: Dispatch<SetStateAction<boolean>>, nodeName: string) => {
-// const node = downloadNodes[nodeName]
+// 空状态组件
+function EmptyState({ searchTerm }: { searchTerm: string }) {
+  return (
+    <div className="empty-state">
+      <FileSearch className="empty-state-icon" />
+      <h3 className="text-lg font-medium text-gray-900 mb-2">
+        {searchTerm ? "未找到匹配的版本" : "暂无版本"}
+      </h3>
+      <p className="text-gray-500">
+        {searchTerm 
+          ? `没有找到包含 "${searchTerm}" 的版本，请尝试其他关键词`
+          : "当前筛选条件下没有可用的版本"
+        }
+      </p>
+    </div>
+  );
+}
 
-// fetch(node + "/ping").then((res) => {
-//   if (res.ok) {
-//     setNode1Status(true)
-//   } else {
-//     setNode1Status(false)
-//   }
-// })
-// }
+// 特性标签组件
+function FeatureBadges() {
+  const features = [
+    { icon: Shield, text: "免登录", style: "client-badge-info" },
+    { icon: Zap, text: "不限速", style: "client-badge-success" },
+    { icon: Eye, text: "无广告", style: "client-badge-warning" },
+  ];
+
+  return (
+    <div className="flex flex-wrap justify-center gap-3 mb-8">
+      {features.map((feature, index) => (
+        <div
+          key={index}
+          className={`client-badge ${feature.style}`}
+        >
+          <feature.icon className="w-4 h-4" />
+          <span>{feature.text}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// 游戏版本列表组件
+function GameVersionList({ 
+  games, 
+  setShowSteamWindow 
+}: { 
+  games: GameVersion[];
+  setShowSteamWindow: Dispatch<SetStateAction<boolean>>;
+}) {
+  if (games.length === 0) {
+    return <EmptyState searchTerm="" />;
+  }
+
+  return (
+    <div className="space-y-4">
+      {games.map((game, index) => (
+        <div
+          key={game.version}
+          className="card-list-enter"
+          style={{
+            animationDelay: `${index * 50}ms`,
+            animationFillMode: 'both'
+          }}
+        >
+          <GameVersionCard
+            game={game}
+            setShowSteamWindow={setShowSteamWindow}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 // 主容器
 export function GameMuseumComponent() {
   const [showSteamWindow, setShowSteamWindow] = useState(false);
-  // const [downloadNode, setDownloadNode] = useState("node2")
-
-  // const [node1status, setNode1Status] = useState(false)
-  // const [node2status, setNode2Status] = useState(false)
-  // const [node3status, setNode3Status] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [platformFilter, setPlatformFilter] = useState("all");
+  const [versionTypeFilter, setVersionTypeFilter] = useState("all");
 
   useEffect(() => {
     document.title = "铁锈战争下载站";
   }, []);
 
-  // const DownloadNodeSwitch = () => {
-  // testNode(setNode1Status, "node1")
-  // testNode(setNode2Status, "node2")
-  // testNode(setNode3Status, "node3")
-  // return (
-  // <Tabs defaultValue={downloadNode} className="mb-4" onValueChange={(value) => setDownloadNode(value)}>
-  //   <TabsList className="w-full rounded-md h-[50px] pl-2 pr-2">
-  //     <TabsTrigger className="w-full pb-2" value="node1">
-  {
-    /* <Circle className="h-2 w-2 mr-2" fill={node1status ? "green" : "red"} />
-            下载节点 1</TabsTrigger>
-          <TabsTrigger className="w-full pb-2" value="node2">
-          <Circle className="h-2 w-2 mr-2" fill={node2status ? "green" : "red"} />
-          下载节点 2</TabsTrigger>
-          <TabsTrigger className="w-full pb-2"  value="node3">
-          <Circle className="h-2 w-2 mr-2" fill={node3status ? "green" : "red"} />
-          下载节点 3</TabsTrigger> */
-  }
-  {
-    /* </TabsList>
-      </Tabs> */
-  }
-  //   )
-  // }
+  // 筛选逻辑
+  const filteredGames = useMemo(() => {
+    let filtered = gameVersions;
+
+    // 按搜索词筛选
+    if (searchTerm) {
+      filtered = filtered.filter(game =>
+        game.version.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        game.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // 按平台筛选
+    if (platformFilter !== "all") {
+      filtered = filtered.filter(game =>
+        Object.keys(game.downloads).includes(platformFilter)
+      );
+    }
+
+    // 按版本类型筛选
+    if (versionTypeFilter !== "all") {
+      if (versionTypeFilter === "stable") {
+        filtered = filtered.filter(game => !game.beta && !game.thirdParty);
+      } else if (versionTypeFilter === "beta") {
+        filtered = filtered.filter(game => game.beta);
+      } else if (versionTypeFilter === "thirdParty") {
+        filtered = filtered.filter(game => game.thirdParty);
+      }
+    }
+
+    return filtered;
+  }, [searchTerm, platformFilter, versionTypeFilter]);
 
   return (
-    <div className="container">
-      <img
-        src="https://cdn1.d5v.cc/yk6baz03t0m000d5qauzx7785smauwhcDIYPAwFxDwe1DcxxDO==.webp"
-        alt="logo"
-        style={{
-          height: "10rem",
-          display: "block",
-          margin: "0 auto",
-        }}
-      />
-      <h1 className="text-4xl font-bold text-center mb-4 mt-4 text-[hsl(var(--primary))]">
-        铁锈战争下载站
-      </h1>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
+        {/* 头部区域 */}
+        <div className="text-center mb-12">
+          <div className="mb-6">
+            <img
+              src="https://cdn1.d5v.cc/yk6baz03t0m000d5qauzx7785smauwhcDIYPAwFxDwe1DcxxDO==.webp"
+              alt="铁锈战争 Logo"
+              className="h-20 md:h-24 mx-auto drop-shadow-sm"
+            />
+          </div>
+          
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            铁锈战争下载站
+          </h1>
+          
+          <p className="text-gray-600 text-base md:text-lg mb-8 max-w-2xl mx-auto">
+            提供最新版本的铁锈战争游戏下载，支持多平台，安全可靠
+          </p>
 
-      <div className="flex justify-center mt-2 mb-4">
-        <div className="bg-blue-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-blue-600 border-blue-600 border mr-2">
-          <FaBox className="mr-1" />
-          <span>免登录</span>
+          <FeatureBadges />
+
+          {/* 模组下载站按钮 */}
+          <div className="mb-8">
+            <button
+              className="client-button-primary px-6 py-3 rounded font-medium inline-flex items-center gap-2 text-sm"
+              onClick={() => {
+                window.open("https://rw.d5v.cc", "_blank");
+              }}
+            >
+              <FaBoxIcon className="h-4 w-4" />
+              前往模组下载站
+              <AiOutlineArrowRight className="h-4 w-4" />
+            </button>
+          </div>
         </div>
-        <div className="bg-green-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-green-600 border-green-600 border mr-2">
-          <FaBox className="mr-1" />
-          <span>不限速</span>
-        </div>
-        <div className="bg-lime-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-lime-600 border-lime-600 border">
-          <FaBox className="mr-1" />
-          <span>无广告</span>
+
+        {/* 主要内容区域 */}
+        <div className="max-w-4xl mx-auto">
+          {/* 搜索和筛选 */}
+          <SearchAndFilter
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            platformFilter={platformFilter}
+            setPlatformFilter={setPlatformFilter}
+            versionTypeFilter={versionTypeFilter}
+            setVersionTypeFilter={setVersionTypeFilter}
+          />
+
+          <div className="content-animation">
+            <GameVersionCounter games={filteredGames} />
+            {filteredGames.length === 0 ? (
+              <EmptyState searchTerm={searchTerm} />
+            ) : (
+              <GameVersionList 
+                games={filteredGames} 
+                setShowSteamWindow={setShowSteamWindow} 
+              />
+            )}
+          </div>
         </div>
       </div>
 
-      <Tabs
-        defaultValue="all"
-        style={{
-          width: "80vw",
-          maxWidth: "800px",
-          margin: "0 auto",
-        }}
-      >
-        <div className="mt-5">
-          <Button
-            className="w-full text-center text-lg"
-            variant="outline"
-            onClick={() => {
-              window.open("https://rw.d5v.cc", "_blank");
-            }}
-          >
-            <FaBoxIcon className="mr-2 h-5 w-5" />
-            前往<span className="text-[hsl(var(--primary))]">模组</span>下载站
-            <AiOutlineArrowRight className="h-4" />
-          </Button>
-        </div>
-        <TabsList className="w-full rounded-md h-[50px] pl-2 pr-2 mt-2">
-          <TabsTrigger className="w-full pb-2" value="all">
-            全部版本
-          </TabsTrigger>
-          <TabsTrigger className="w-full pb-2 ml-2 mr-2" value="vanilla">
-            原版
-          </TabsTrigger>
-          <TabsTrigger className="w-full pb-2 " value="thirdParty">
-            第三方版本
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="all">
-          {/* <DownloadNodeSwitch  /> */}
-          {/* 全部数据 */}
-          <GameVersionCounter games={gameVersions} />
-          <div>
-            {gameVersions.map((game) => (
-              <GameVersionCard
-                key={game.version}
-                game={game}
-                setShowSteamWindow={setShowSteamWindow}
-              />
-            ))}
-          </div>
-        </TabsContent>
-        <TabsContent value="vanilla">
-          {/* <DownloadNodeSwitch  /> */}
-          {/* 原版 */}
-          <GameVersionCounter
-            games={gameVersions.filter((game) => !game.thirdParty)}
-          />
-          <div>
-            {gameVersions
-              .filter((game) => !game.thirdParty)
-              .map((game) => (
-                <GameVersionCard
-                  key={game.version}
-                  game={game}
-                  setShowSteamWindow={setShowSteamWindow}
-                />
-              ))}
-          </div>
-        </TabsContent>
-        <TabsContent value="thirdParty">
-          {/* <DownloadNodeSwitch  /> */}
-          {/* 第三方 */}
-          <GameVersionCounter
-            games={gameVersions.filter((game) => game.thirdParty)}
-          />
-          <div>
-            {gameVersions
-              .filter((game) => game.thirdParty)
-              .map((game) => (
-                <GameVersionCard
-                  key={game.version}
-                  game={game}
-                  setShowSteamWindow={setShowSteamWindow}
-                />
-              ))}
-          </div>
-        </TabsContent>
-      </Tabs>
-
-      {/* 正在下载弹出 */}
+      {/* Steam 弹窗 */}
       <Drawer open={showSteamWindow} onClose={() => setShowSteamWindow(false)}>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>已经开始下载...</DrawerTitle>
-            <DrawerDescription>是否考虑支持正版?</DrawerDescription>
+        <DrawerContent className="bg-white border-t border-gray-200">
+          <DrawerHeader className="text-center">
+            <DrawerTitle className="text-xl font-bold text-gray-900">
+              下载已开始
+            </DrawerTitle>
+            <DrawerDescription className="text-gray-600">
+              是否考虑支持正版游戏？
+            </DrawerDescription>
           </DrawerHeader>
           <GameSteamShare />
         </DrawerContent>
@@ -318,7 +443,6 @@ export function GameVersionCard({
     if (selectedSystem) {
       setShowSteamWindow(true);
       let url = game.downloads[selectedSystem];
-      // url = url.replace("%HOST%", "https://file-02.d5v.cc");
 
       if (url.startsWith("*")) {
         window.open(url.slice(1), "_blank");
@@ -335,14 +459,14 @@ export function GameVersionCard({
     if (selectedSystem && game.downloads[selectedSystem].startsWith("*")) {
       setDownloadButtonMessage(
         <>
-          <FaShare className="mr-2 h-4 w-4" />
+          <ExternalLink className="h-4 w-4" />
           前往 {selectedSystem}
         </>
       );
     } else {
       setDownloadButtonMessage(
         <>
-          <AiOutlineCloudDownload className="mr-2 h-4 w-4" />
+          <Download className="h-4 w-4" />
           下载 {selectedSystem} 版
         </>
       );
@@ -350,48 +474,58 @@ export function GameVersionCard({
   }, [game.downloads, selectedSystem]);
 
   return (
-    <Card className="flex flex-col mb-8">
-      <CardHeader>
-        <CardTitle className="flex justify-center flex-col">
+    <Card className="client-card rounded-lg">
+      <CardHeader className="pb-4">
+        <CardTitle className="flex flex-col items-center text-center">
           <Link
             to={`/v/${encodeURIComponent(game.version)}`}
-            className="hover:text-blue-500 text-[inherit] transition-colors duration-300"
+            className="card-title text-xl font-bold mb-3"
           >
             {game.version}
           </Link>
-          <div className="flex items-center justify-center pt-2">
+          
+          <div className="flex flex-wrap items-center justify-center gap-2">
             {game.beta ? (
-              <div className="ml-2 bg-red-100 rounded pl-1 pr-2 text-sm flex justify-center items-center text-red-600 border-red-600 border">
-                <AiFillBug className="mr-1" />
+              <div className="client-badge client-badge-error">
+                <AiFillBug className="h-3 w-3" />
                 <span>测试版</span>
               </div>
             ) : (
-              <div className="ml-2 bg-green-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-green-600 border-green-600 border">
-                <FaBox className="mr-1" />
+              <div className="client-badge client-badge-success">
+                <FaBox className="h-3 w-3" />
                 <span>正式版</span>
               </div>
             )}
+            
             {game.recommended && (
-              <div className="ml-2 bg-yellow-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-yellow-600 border-yellow-600 border">
-                <AiFillStar className="mr-1" />
+              <div className="client-badge client-badge-warning">
+                <AiFillStar className="h-3 w-3" />
                 <span>推荐</span>
               </div>
             )}
+            
             {game.thirdParty && (
-              <div className="ml-2 bg-blue-100 rounded pl-2 pr-2 text-sm flex justify-center items-center text-blue-600 border-blue-600 border">
-                <FaBox className="mr-1" />
+              <div className="client-badge client-badge-info">
+                <FaBox className="h-3 w-3" />
                 <span>第三方</span>
               </div>
             )}
           </div>
         </CardTitle>
+        
         {game.releaseDate && (
-          <CardDescription>发布于: {game.releaseDate}</CardDescription>
+          <CardDescription className="card-description text-center text-sm mt-2">
+            发布于: {game.releaseDate}
+          </CardDescription>
         )}
       </CardHeader>
-      <CardContent>
-        <p className="mb-4">{game.description}</p>
-        <div className="max-w-sm mx-auto">
+      
+      <CardContent className="px-6 pb-4">
+        <p className="card-content text-center mb-6 text-sm leading-relaxed">
+          {game.description}
+        </p>
+        
+        <div className="max-w-xs mx-auto">
           <SystemSelector
             systems={availableSystems}
             onSelect={setSelectedSystem}
@@ -399,27 +533,17 @@ export function GameVersionCard({
           />
         </div>
       </CardContent>
-      <CardFooter className="mt-auto flex flex-col">
-        {/* 下载 */}
-        <Button
-          title="下载"
-          className="w-full"
+      
+      <CardFooter className="px-6 pb-6">
+        <button
+          className={`w-full client-button-primary py-3 rounded font-medium inline-flex items-center justify-center gap-2 text-sm ${
+            !selectedSystem ? 'disabled' : ''
+          }`}
           disabled={!selectedSystem}
           onClick={handleDownload}
         >
           {downloadButtonMessage}
-        </Button>
-        {/* 分享 */}
-        {/* <Button className="w-full mt-2" disabled={!selectedSystem} variant={"outline"} onClick={() => {
-          const url = `${window.location.origin}/v/${encodeURIComponent(game.version)}`
-          navigator.clipboard.writeText(url).then(() => {
-            alert("复制成功")
-          }).catch(() => {
-            alert("复制失败")
-          })
-        }}>
-          <FaShare className="mr-2 h-4 w-4" /> 复制分享链接
-        </Button> */}
+        </button>
       </CardFooter>
     </Card>
   );
