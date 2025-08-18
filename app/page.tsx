@@ -10,13 +10,6 @@ export default function HomePage() {
         {/* 亮色模式背景 - 绿色网格 */}
         <div className="absolute inset-0 -z-10 bg-grid-green/[0.1] dark:hidden block"></div>
         <div className="absolute inset-0 -z-20 bg-background"></div>
-        <div className="mb-4 flex justify-center">
-          <img
-            src="https://cdn1.d5v.cc/yk6baz03t0m000d5qauzx7785smauwhcDIYPAwFxDwe1DcxxDO==.webp"
-            alt="铁锈战争 Logo"
-            className="h-24 md:h-28 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]"
-          />
-        </div>
         <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-900 to-neutral-600 dark:from-neutral-50 dark:to-neutral-400 mb-4 tracking-tight">
           铁锈战争下载站
         </h1>

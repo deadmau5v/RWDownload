@@ -56,15 +56,6 @@ export function GameCard({ game, index }: { game: GameVersion; index: number }) 
               {Object.keys(game.downloads).length} 个平台可用
             </div>
           </div>
-          {isStable && (
-            <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg border border-primary/20">
-              <img 
-                src="https://cdn1.d5v.cc/CDN/Image/rw.png" 
-                alt="Rusted Warfare Icon" 
-                className="w-8 h-8 rounded-md" 
-              />
-            </div>
-          )}
         </div>
       </CardHeader>
 
