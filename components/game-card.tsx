@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Bug, CheckCircle, Star, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { safeEncodeURIComponent } from "@/lib/url-utils"
 
 const badgeStyles = {
   stable: "border-green-400/20 bg-green-500/8 text-green-400/80",
@@ -91,7 +92,7 @@ export function GameCard({ game, index }: { game: GameVersion; index: number }) 
           )}
           size="sm"
         >
-          <Link href={`/v/${encodeURIComponent(game.version)}`}>
+          <Link href={`/v/${safeEncodeURIComponent(game.version)}`}>
             <span>查看详情</span>
             <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
           </Link>

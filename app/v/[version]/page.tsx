@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { safeDecodeURIComponent, safeEncodeURIComponent } from "@/lib/url-utils"
 
 type Props = {
   params: Promise<{ version: string }>
@@ -12,14 +13,14 @@ type Props = {
 
 export async function generateStaticParams() {
   return gameVersions.map((game) => ({
-    version: encodeURIComponent(game.version),
+    version: safeEncodeURIComponent(game.version),
   }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // 等待 params 以符合 Next.js 的异步动态 API 规范
   const { version: encodedVersion } = await params
-  const version = decodeURIComponent(encodedVersion)
+  const version = safeDecodeURIComponent(encodedVersion)
   const game = gameVersions.find((g) => g.version === version)
 
   if (!game) {
@@ -34,12 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${game.version} - 铁锈战争下载`,
     description: description,
     alternates: {
-      canonical: `/v/${encodeURIComponent(game.version)}`,
+      canonical: `/v/${safeEncodeURIComponent(game.version)}`,
     },
     openGraph: {
       title: `${game.version} - 铁锈战争下载`,
       description: description,
-      url: `/v/${encodeURIComponent(game.version)}`,
+      url: `/v/${safeEncodeURIComponent(game.version)}`,
       images: [
         {
           url: "/logo.png",
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function VersionPage({ params }: Props) {
   const { version: encodedVersion } = await params
-  const version = decodeURIComponent(encodedVersion)
+  const version = safeDecodeURIComponent(encodedVersion)
   const game = gameVersions.find((g) => g.version === version)
 
   if (!game) {
