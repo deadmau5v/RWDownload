@@ -5,6 +5,7 @@ import "./globals.css"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from "@/components/header"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
