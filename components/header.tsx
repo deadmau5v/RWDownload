@@ -31,12 +31,6 @@ export function Header() {
           <span className="font-bold text-lg hidden sm:inline-block">铁锈战争下载站</span>
         </Link>
         <nav className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm">
-            <a href="https://rw.d5v.cc" target="_blank" rel="noopener noreferrer">
-              <Package className="mr-2 h-4 w-4" />
-              下载模组
-            </a>
-          </Button>
           <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
             <a href="https://github.com/deadmau5v/RWDownload" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4" />
