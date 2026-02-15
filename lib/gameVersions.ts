@@ -19,6 +19,8 @@ export const gameVersions: GameVersion[] = [
       Windows: "https://file-02.d5v.cc/d/public/pc/Rusted%20Warfare%201.15.exe",
       Android: "https://file-02.d5v.cc/d/public/pe/RustedWarfare-1.15.apk",
       Linux: "https://file-02.d5v.cc/d/public/linux/RustedWarfare1.15.tar",
+      MacOS: "https://file-02.d5v.cc/d/seeoss/RW/macos/Rusted%20Warfare.zip",
+      IOS: "*https://file-02.d5v.cc/seeoss/RW/ios/%E9%93%81%E9%94%88%E6%88%98%E4%BA%89_1.15_%E6%B1%89%E5%8C%96.ipa"
     },
   },
   {

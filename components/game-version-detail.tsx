@@ -39,6 +39,7 @@ const platformIcons: { [key: string]: React.ReactNode } = {
   Linux: <AiOutlineLinux className="h-6 w-6 text-yellow-400" />,
   Android: <AiFillAndroid className="h-6 w-6 text-green-400" />,
   IOS: <AiFillApple className="h-6 w-6 text-neutral-400" />,
+  MacOS: <AiFillApple className="h-6 w-6 text-neutral-400" />,
   Github: <GrGithub className="h-6 w-6 text-neutral-300" />,
 }
 
@@ -56,13 +57,13 @@ export function GameVersionDetail({ game }: { game: GameVersion }) {
     setIsDownloading(false)
     setCountdown(0)
     setVisualSelectedIndex(selectedIndex)
-    
+
     // 添加文字切换动画
     setIsTextChanging(true)
     const timer = setTimeout(() => {
       setIsTextChanging(false)
     }, 150)
-    
+
     return () => clearTimeout(timer)
   }, [selectedSystem, selectedIndex])
 
@@ -79,21 +80,21 @@ export function GameVersionDetail({ game }: { game: GameVersion }) {
 
   const handleDownload = () => {
     if (isDownloading) return
-    
+
     const url = game.downloads[selectedSystem]
     if (url) {
-      
+
       const link = document.createElement('a')
       link.href = url.startsWith("*") ? url.slice(1) : url
       link.download = ''
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-      
+
       // 设置等待状态
       setIsDownloading(true)
       setCountdown(5)
-      
+
       // 倒计时
       const timer = setInterval(() => {
         setCountdown(prev => {
@@ -149,13 +150,13 @@ export function GameVersionDetail({ game }: { game: GameVersion }) {
             <h3 className="text-lg font-semibold text-foreground">选择平台</h3>
             <div className="relative flex flex-col gap-1 p-2 bg-background/30 rounded-xl border border-border/40">
               {/* 滑动选择背景 */}
-              <div 
+              <div
                 className="absolute left-2 w-[calc(100%-16px)] h-12 bg-primary/8 border border-primary/40 rounded-lg transition-all duration-300 ease-out"
                 style={{
                   transform: `translateY(${visualSelectedIndex * 52}px)`,
                 }}
               />
-              
+
               {platforms.map((sys, index) => (
                 <button
                   key={sys}
@@ -175,8 +176,8 @@ export function GameVersionDetail({ game }: { game: GameVersion }) {
                   </div>
                   <div className={cn(
                     "w-1.5 h-1.5 rounded-full transition-all duration-200",
-                    selectedSystem === sys 
-                      ? "bg-primary opacity-100" 
+                    selectedSystem === sys
+                      ? "bg-primary opacity-100"
                       : "bg-transparent opacity-0"
                   )} />
                 </button>
@@ -212,8 +213,8 @@ export function GameVersionDetail({ game }: { game: GameVersion }) {
                     <div className="relative overflow-hidden">
                       <span className={cn(
                         "inline-block transition-all duration-300 ease-out",
-                        isTextChanging 
-                          ? "opacity-0 translate-y-2 scale-95" 
+                        isTextChanging
+                          ? "opacity-0 translate-y-2 scale-95"
                           : "opacity-100 translate-y-0 scale-100"
                       )}>
                         {isExternalLink ? `前往 ${selectedSystem}` : `下载 ${selectedSystem} 版`}

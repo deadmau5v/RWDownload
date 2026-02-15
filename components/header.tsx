@@ -5,7 +5,7 @@ import { ThemeToggle } from "./theme-toggle"
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { Button } from "./ui/button"
-import { Github, Package } from "lucide-react"
+import { Github, Package, Trophy } from "lucide-react"
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -31,6 +31,30 @@ export function Header() {
           <span className="font-bold text-lg hidden sm:inline-block">铁锈战争下载站</span>
         </Link>
         <nav className="flex items-center gap-2">
+          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+            <a href="https://rw.denox.cc" target="_blank" rel="noopener noreferrer">
+              <Package className="h-4 w-4" />
+              前往模组下载站
+            </a>
+          </Button>
+          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+            <a href="https://esports.cnkd.fun/" target="_blank" rel="noopener noreferrer">
+              <Trophy className="h-4 w-4" />
+              前往铁锈赛事网站
+            </a>
+          </Button>
+          <Button asChild variant="ghost" size="icon" className="sm:hidden">
+            <a href="https://rw.denox.cc" target="_blank" rel="noopener noreferrer">
+              <Package className="h-4 w-4" />
+              <span className="sr-only">前往模组下载站</span>
+            </a>
+          </Button>
+          <Button asChild variant="ghost" size="icon" className="sm:hidden">
+            <a href="https://esports.cnkd.fun/" target="_blank" rel="noopener noreferrer">
+              <Trophy className="h-4 w-4" />
+              <span className="sr-only">前往铁锈赛事网站</span>
+            </a>
+          </Button>
           <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
             <a href="https://github.com/deadmau5v/RWDownload" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4" />

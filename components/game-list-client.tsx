@@ -42,7 +42,7 @@ export function GameListClient({ allGames }: { allGames: GameVersion[] }) {
       })
   }, [searchTerm, platformFilter, versionTypeFilter, allGames])
 
-  const platforms = ["all", "Windows", "Android", "Linux", "IOS", "Github"]
+  const platforms = ["all", "Windows", "Android", "Linux", "IOS", "Github", "MacOS"]
   const versionTypes = ["all", "stable", "beta", "thirdParty"]
 
   const platformLabels: { [key: string]: string } = {
@@ -51,6 +51,7 @@ export function GameListClient({ allGames }: { allGames: GameVersion[] }) {
     Android: "Android",
     Linux: "Linux",
     IOS: "iOS",
+    MacOS: "MacOS",
     Github: "Github",
   }
 
