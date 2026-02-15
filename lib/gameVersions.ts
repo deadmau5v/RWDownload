@@ -55,14 +55,12 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
-    version: "RWPP 1.5.3",
+    version: "RWPP",
     beta: false,
     thirdParty: true,
-    releaseDate: "2025-7-11",
+    releaseDate: "2026",
     description: "现代化的第三方版本，拥有更现代化的UI，更多开房选项，以及更稳定的游戏体验。",
     downloads: {
-      Android: "https://file-02.d5v.cc/d/public/pe/RWPP1.5.3.2.apk",
-      Windows: "https://file-02.d5v.cc/d/public/pc/RWPP1.5.3.exe",
       Github: "*https://github.com/Minxyzgo/RWPP",
     },
   },
