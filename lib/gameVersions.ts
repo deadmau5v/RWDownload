@@ -1,4 +1,5 @@
 export type GameVersion = {
+  slug: string // URL slug
   version: string // 版本号
   releaseDate: string // 发布日期
   description: string // 版本描述
@@ -10,6 +11,7 @@ export type GameVersion = {
 
 export const gameVersions: GameVersion[] = [
   {
+    slug: "1-15",
     version: "铁锈战争 1.15",
     beta: false,
     recommended: true,
@@ -24,6 +26,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-14",
     version: "铁锈战争 1.14",
     beta: false,
     releaseDate: "2020-8-29",
@@ -35,6 +38,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-14-30p",
     version: "铁锈战争 1.14 [30人版]",
     beta: false,
     releaseDate: "2020-8-29",
@@ -45,6 +49,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-14-20p",
     version: "铁锈战争 1.14 [20人版]",
     beta: false,
     releaseDate: "2020-8-29",
@@ -55,6 +60,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "rwpp",
     version: "RWPP",
     beta: false,
     thirdParty: true,
@@ -65,6 +71,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p11",
     version: "铁锈战争 1.15p11",
     beta: true,
     releaseDate: "",
@@ -75,6 +82,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p10",
     version: "铁锈战争 1.15p10",
     beta: true,
     releaseDate: "",
@@ -85,6 +93,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p9",
     version: "铁锈战争 1.15p9",
     beta: true,
     releaseDate: "",
@@ -95,6 +104,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p8",
     version: "铁锈战争 1.15p8",
     beta: true,
     releaseDate: "",
@@ -105,6 +115,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p7",
     version: "铁锈战争 1.15p7",
     beta: true,
     releaseDate: "",
@@ -114,6 +125,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p6",
     version: "铁锈战争 1.15p6",
     beta: true,
     releaseDate: "",
@@ -123,6 +135,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p5",
     version: "铁锈战争 1.15p5",
     beta: true,
     releaseDate: "",
@@ -132,6 +145,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p4",
     version: "铁锈战争 1.15p4",
     beta: true,
     releaseDate: "",
@@ -141,6 +155,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-15p3",
     version: "铁锈战争 1.15p3",
     beta: true,
     releaseDate: "",
@@ -150,6 +165,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-14p9",
     version: "铁锈战争 1.14p9",
     beta: true,
     releaseDate: "",
@@ -159,6 +175,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-13",
     version: "铁锈战争 1.13",
     beta: false,
     releaseDate: "2018-10-28",
@@ -170,6 +187,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-12",
     version: "铁锈战争 1.12",
     beta: false,
     releaseDate: "2018-1-26",
@@ -180,6 +198,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-11",
     version: "铁锈战争 1.11",
     beta: false,
     releaseDate: "很久很久以前",
@@ -190,6 +209,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-10",
     version: "铁锈战争 1.10",
     beta: false,
     releaseDate: "很久很久以前",
@@ -200,6 +220,7 @@ export const gameVersions: GameVersion[] = [
     },
   },
   {
+    slug: "1-09",
     version: "铁锈战争 1.09",
     beta: false,
     releaseDate: "很久很久以前",
