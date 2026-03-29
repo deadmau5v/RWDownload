@@ -44,12 +44,6 @@ export function Header() {
             </a>
           </Button>
           <Button asChild variant="ghost" size="icon" className="sm:hidden">
-            <a href="https://rw.denox.cc" target="_blank" rel="noopener noreferrer">
-              <Package className="h-4 w-4" />
-              <span className="sr-only">前往模组下载站</span>
-            </a>
-          </Button>
-          <Button asChild variant="ghost" size="icon" className="sm:hidden">
             <a href="https://esports.cnkd.fun/" target="_blank" rel="noopener noreferrer">
               <Trophy className="h-4 w-4" />
               <span className="sr-only">前往铁锈赛事网站</span>

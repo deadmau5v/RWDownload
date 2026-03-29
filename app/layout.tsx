@@ -1,16 +1,10 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from "@/components/header"
 import { Analytics } from "@vercel/analytics/next"
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
 
 export const metadata: Metadata = {
   title: "铁锈战争下载站 - Rusted Warfare Downloads",
@@ -54,7 +48,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <div className="relative flex min-h-screen w-full flex-col">
             <Header />
