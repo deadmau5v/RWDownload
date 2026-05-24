@@ -5,7 +5,7 @@ import { ThemeToggle } from "./theme-toggle"
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { Button } from "./ui/button"
-import { Github, Package, Trophy } from "lucide-react"
+import { Github, Map, Package, Trophy } from "lucide-react"
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -43,10 +43,22 @@ export function Header() {
               前往铁锈赛事网站
             </a>
           </Button>
+          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+            <a href="https://maps.rw.nebulapause.com/index.php" target="_blank" rel="noopener noreferrer">
+              <Map className="h-4 w-4" />
+              前往铁锈地图站
+            </a>
+          </Button>
           <Button asChild variant="ghost" size="icon" className="sm:hidden">
             <a href="https://esports.cnkd.fun/" target="_blank" rel="noopener noreferrer">
               <Trophy className="h-4 w-4" />
               <span className="sr-only">前往铁锈赛事网站</span>
+            </a>
+          </Button>
+          <Button asChild variant="ghost" size="icon" className="sm:hidden">
+            <a href="https://maps.rw.nebulapause.com/index.php" target="_blank" rel="noopener noreferrer">
+              <Map className="h-4 w-4" />
+              <span className="sr-only">前往铁锈地图站</span>
             </a>
           </Button>
           <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
