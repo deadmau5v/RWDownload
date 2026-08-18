@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     canonical: "https://pan.denox.cc",
   },
   verification: {
+    google: "sFmzJTDhjnECdcNy6InYegGsyZAQcQ7t2jh-BOhCuCI",
     other: {
       "baidu-site-verification": "codeva-fgewxAiBLB",
     },
