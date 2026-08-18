@@ -10,11 +10,14 @@ export const metadata: Metadata = {
   title: "铁锈战争下载站 - Rusted Warfare Downloads",
   description: "提供最新版本的铁锈战争游戏下载，支持多平台，安全可靠。提供最新、最全的游戏版本，无广告、免登录、不限速，支持多平台。",
   keywords: "铁锈战争, Rusted Warfare, RTS, 即时战略, 游戏下载, 铁锈战争PC版, 铁锈战争手机版, 1.15, 1.14, 免费游戏",
-  metadataBase: new URL("https://pan.d5v.cc"),
+  metadataBase: new URL("https://pan.denox.cc"),
+  alternates: {
+    canonical: "https://pan.denox.cc",
+  },
   openGraph: {
     title: "铁锈战争下载站 - Rusted Warfare Downloads",
     description: "提供最新版本的铁锈战争游戏下载，支持多平台，安全可靠。提供最新、最全的游戏版本。",
-    url: "https://pan.d5v.cc",
+    url: "https://pan.denox.cc",
     siteName: "铁锈战争下载站",
     images: [
       {
