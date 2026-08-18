@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://pan.denox.cc",
   },
+  verification: {
+    other: {
+      "baidu-site-verification": "codeva-fgewxAiBLB",
+    },
+  },
   openGraph: {
     title: "铁锈战争下载站 - Rusted Warfare Downloads",
     description: "提供最新版本的铁锈战争游戏下载，支持多平台，安全可靠。提供最新、最全的游戏版本。",
