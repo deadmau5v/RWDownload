@@ -45,7 +45,7 @@ export function GameListClient({ allGames }: { allGames: GameVersion[] }) {
       })
   }, [searchTerm, platformFilter, versionTypeFilter, allGames])
 
-  const platforms = ["all", "Windows", "Android", "Linux", "IOS", "Github", "MacOS"]
+  const platforms = ["all", "Windows", "Android", "Linux", "IOS", "Github"]
   const versionTypes = ["all", "stable", "beta", "thirdParty"]
 
   const platformLabels: { [key: string]: string } = {
@@ -66,50 +66,50 @@ export function GameListClient({ allGames }: { allGames: GameVersion[] }) {
   }
 
   const filterFields = (
-    <>
+    <div className="space-y-3">
       <div className="relative">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           type="text"
           placeholder="搜索版本号，例如：1.15, RWPP..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="h-12 bg-transparent pl-11 text-base"
+          className="h-10 bg-transparent pl-10 text-sm"
         />
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Select value={platformFilter} onValueChange={setPlatformFilter}>
-          <SelectTrigger className="h-12 bg-transparent text-base">
+          <SelectTrigger className="h-10 bg-transparent text-sm">
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Filter className="h-5 w-5" />
+              <Filter className="h-4 w-4" />
               <SelectValue placeholder="选择平台" />
             </div>
           </SelectTrigger>
           <SelectContent>
             {platforms.map((p) => (
-              <SelectItem key={p} value={p} className="text-base">
+              <SelectItem key={p} value={p} className="text-sm">
                 {platformLabels[p]}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
         <Select value={versionTypeFilter} onValueChange={setVersionTypeFilter}>
-          <SelectTrigger className="h-12 bg-transparent text-base">
+          <SelectTrigger className="h-10 bg-transparent text-sm">
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Filter className="h-5 w-5" />
+              <Filter className="h-4 w-4" />
               <SelectValue placeholder="选择类型" />
             </div>
           </SelectTrigger>
           <SelectContent>
             {versionTypes.map((t) => (
-              <SelectItem key={t} value={t} className="text-base">
+              <SelectItem key={t} value={t} className="text-sm">
                 {versionTypeLabels[t]}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </div>
-    </>
+    </div>
   )
 
   return (
@@ -157,8 +157,50 @@ export function GameListClient({ allGames }: { allGames: GameVersion[] }) {
         </div>
       </Collapsible>
 
-      <div className="hidden rounded-xl bg-glass p-6 md:sticky md:top-[70px] md:z-20 md:block md:space-y-4">
-        {filterFields}
+      {/* 桌面端搜索与筛选栏（非固定，紧凑横排布局） */}
+      <div className="hidden rounded-xl border bg-card/60 p-3 shadow-sm backdrop-blur-md md:block">
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="搜索版本号，例如：1.15, RWPP..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-10 bg-transparent pl-10 text-sm"
+            />
+          </div>
+          <Select value={platformFilter} onValueChange={setPlatformFilter}>
+            <SelectTrigger className="h-10 w-[140px] shrink-0 bg-transparent text-sm">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Filter className="h-4 w-4" />
+                <SelectValue placeholder="平台" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              {platforms.map((p) => (
+                <SelectItem key={p} value={p} className="text-sm">
+                  {platformLabels[p]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={versionTypeFilter} onValueChange={setVersionTypeFilter}>
+            <SelectTrigger className="h-10 w-[140px] shrink-0 bg-transparent text-sm">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Filter className="h-4 w-4" />
+                <SelectValue placeholder="类型" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              {versionTypes.map((t) => (
+                <SelectItem key={t} value={t} className="text-sm">
+                  {versionTypeLabels[t]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {filteredGames.length > 0 ? (
